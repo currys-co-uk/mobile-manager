@@ -1,0 +1,33 @@
+﻿{
+  "TableNames": {
+    "MsSql": "DeviceProperties",
+    "Sqlite": "DeviceProperties",
+    "PostgreSql": "device_properties"
+  },
+  "PropertyMappings": [
+    {
+      "PropertyName": "Id",
+      "Mappings": {
+        "MsSql": "Id",
+        "Sqlite": "Id",
+        "PostgreSql": "id"
+      }
+    },
+    {
+      "PropertyName": "Key",
+      "Mappings": {
+        "MsSql": "Key",
+        "Sqlite": "Key",
+        "PostgreSql": "key"
+      }
+    },
+    {
+      "PropertyName": "Value",
+      "Mappings": {
+        "MsSql": "Value",
+        "Sqlite": "Value",
+        "PostgreSql": "value"
+      }
+    }
+  ]
+}

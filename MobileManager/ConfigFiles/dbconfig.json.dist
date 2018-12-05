@@ -1,0 +1,10 @@
+﻿{
+  "ConnectionStrings": {
+    "MsSql": "Server=(localdb)\\mobilemanager;Database=MobileManagerDb; Integrated Security=true;",
+    "Sqlite": "Data Source=mobile_manager.db;",
+    "PostgreSql": "Server=127.0.0.1;Port=5432;Database=mobile_manager;User Id=postgres;Password=735915;"
+  },
+  "DbProvider": "PostgreSql",
+  "DefaultDbSchema": "mobile_manager",
+  "DbMappingFilesPath": "DbMappingFiles"
+}

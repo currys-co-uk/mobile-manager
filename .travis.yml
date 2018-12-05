@@ -1,0 +1,11 @@
+language: csharp
+mono: none
+dotnet: 2.1
+
+install:
+ - dotnet clean
+ - dotnet restore
+
+script:
+ - dotnet build
+ - dotnet test MobileManager.Tests/MobileManagerTests.csproj
