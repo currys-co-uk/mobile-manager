@@ -1,0 +1,16 @@
+{
+  "ListeningPort": 9876,
+  "IosDeviceServiceRefreshTime": 10000,
+  "ReservationServiceRefreshTime": 10000,
+  "AndroidDeviceServiceRefreshTime": 10000,
+  "GlobalReconnectTimeout": 5000,
+  "AppiumPortRangeMin": 1234,
+  "AppiumPortRangeMax": 1333,
+  "AppiumLogFilePath": "~/appium/",
+  "IdeviceSyslogFolderPath": "~/ideviceSyslog/",
+  "XcodePath": "/Applications/Xcode.app",
+  "IosDeveloperCertificateTeamId": "",
+  "ListeningIpAddress": "",
+  "AndroidServiceEnabled": true,
+  "IosServiceEnabled": true
+}

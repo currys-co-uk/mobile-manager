@@ -1,0 +1,41 @@
+﻿{
+  "TableNames": {
+    "MsSql": "RequestedDevices",
+    "Sqlite": "RequestedDevices",
+    "PostgreSql": "requested_devices"
+  },
+  "PropertyMappings": [
+    {
+      "PropertyName": "Id",
+      "Mappings": {
+        "MsSql": "Id",
+        "Sqlite": "Id",
+        "PostgreSql": "id"
+      }
+    },
+    {
+      "PropertyName": "DeviceId",
+      "Mappings": {
+        "MsSql": "DeviceId",
+        "Sqlite": "DeviceId",
+        "PostgreSql": "device_id"
+      }
+    },
+    {
+      "PropertyName": "DeviceType",
+      "Mappings": {
+        "MsSql": "DeviceType",
+        "Sqlite": "DeviceType",
+        "PostgreSql": "device_type"
+      }
+    },
+    {
+      "PropertyName": "DeviceName",
+      "Mappings": {
+        "MsSql": "DeviceName",
+        "Sqlite": "DeviceName",
+        "PostgreSql": "device_name"
+      }
+    }
+  ]
+}

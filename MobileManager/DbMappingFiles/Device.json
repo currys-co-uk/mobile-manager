@@ -1,0 +1,57 @@
+﻿{
+  "TableNames": {
+    "MsSql": "Device",
+    "Sqlite": "Device",
+    "PostgreSql": "device"
+  },
+  "PropertyMappings": [
+    {
+      "PropertyName": "Id",
+      "Mappings": {
+        "MsSql": "Id",
+        "Sqlite": "Id",
+        "PostgreSql": "id"
+      }
+    },
+    {
+      "PropertyName": "Name",
+      "Mappings": {
+        "MsSql": "Name",
+        "Sqlite": "Name",
+        "PostgreSql": "name"
+      }
+    },
+    {
+      "PropertyName": "Available",
+      "Mappings": {
+        "MsSql": "Available",
+        "Sqlite": "Available",
+        "PostgreSql": "available"
+      }
+    },
+    {
+      "PropertyName": "Type",
+      "Mappings": {
+        "MsSql": "Type",
+        "Sqlite": "Type",
+        "PostgreSql": "type"
+      }
+    },
+    {
+      "PropertyName": "Status",
+      "Mappings": {
+        "MsSql": "Status",
+        "Sqlite": "Status",
+        "PostgreSql": "status"
+      }
+    },
+    {
+      "PropertyName": "AppiumEndpoint",
+      "Mappings": {
+        "MsSql": "AppiumEndpoint",
+        "Sqlite": "AppiumEndpoint",
+        "PostgreSql": "appium_endpoint"
+      }
+    }
+  ]
+}
