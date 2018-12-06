@@ -3,7 +3,7 @@ Mobile manager project is meant to help others to manage their phones connected 
 
 If you are interested in the project or you wish to help, read below our basic contribution guidelines and get started!
 ## Become a contributor
-Mobile manager uses the Fork and Pull development model. Follow these steps if you want to merge your changes to Firecracker:
+Mobile manager uses the Fork and Pull development model. Follow these steps if you want to merge your changes to MobileManager:
 
 * Within your fork of [Mobile Manager](https://github.com/Continero/mobile-manager), create a branch for your contribution. Use a meaningful name.
 * Create your contribution, meeting all contribution quality standards described below in **Code quality requirements**
