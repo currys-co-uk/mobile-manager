@@ -3,7 +3,13 @@ Mobile manager project is meant to help others to manage their phones connected 
 
 If you are interested in the project or you wish to help, read below our basic contribution guidelines and get started!
 ## Become a contributor
+Mobile manager uses the Fork and Pull development model. Follow these steps if you want to merge your changes to Firecracker:
 
+* Within your fork of Firecracker, create a branch for your contribution. Use a meaningful name.
+* Create your contribution, meeting all contribution quality standards
+* Create a pull request against the master branch of the Firecracker repository.
+* Add two reviewers to your pull request (a maintainer will do that for you if you're new). Work with your reviewers to address any comments and obtain a minimum of 2 approvals, at least one of which must be provided by a maintainer. To update your pull request amend existing commits whenever applicable and then push the new changes to your pull request branch.
+* Once the pull request is approved, one of the maintainers will merge it.
 ### Create your own fork
 ### Submitting pull request
 #### Code quality requirements
