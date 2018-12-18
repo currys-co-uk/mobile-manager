@@ -15,10 +15,10 @@ namespace MobileManager.Appium
 
         /// <inheritdoc />
         public string AppiumPort { get; set; }
-        
+
         /// <inheritdoc />
         public string AppiumBootstrapPort { get; set; }
-        
+
         /// <inheritdoc />
         public int AppiumPid { get; set; }
 
@@ -37,7 +37,8 @@ namespace MobileManager.Appium
         /// <param name="appiumPid">Appium pid.</param>
         /// <param name="webkitDebugProxyPort">Webkit debug proxy port.</param>
         /// <param name="wdaLocalPort">Wda local port.</param>
-        public AppiumProcess(string deviceId, string appiumPort, string appiumBootstrapPort, int appiumPid, string webkitDebugProxyPort, string wdaLocalPort)
+        public AppiumProcess(string deviceId, string appiumPort, string appiumBootstrapPort, int appiumPid,
+            string webkitDebugProxyPort, string wdaLocalPort)
         {
             DeviceId = deviceId;
             AppiumPort = appiumPort;
@@ -50,6 +51,8 @@ namespace MobileManager.Appium
         /// <summary>
         /// Initializes a new instance of the <see cref="T:MobileManager.Appium.Appium.AppiumProcess"/> class.
         /// </summary>
-        public AppiumProcess() { }
+        public AppiumProcess()
+        {
+        }
     }
 }

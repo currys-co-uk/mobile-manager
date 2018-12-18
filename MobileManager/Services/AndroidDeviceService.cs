@@ -13,10 +13,12 @@ using MobileManager.Http.Clients;
 using MobileManager.Logging.Logger;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Enums;
+using MobileManager.Utils;
 using Newtonsoft.Json;
 
 namespace MobileManager.Services
 {
+    /// <inheritdoc cref="IHostedService" />
     /// <summary>
     /// Android device service.
     /// </summary>
@@ -97,12 +99,15 @@ namespace MobileManager.Services
                                 continue;
                             }
 
-                            _logger.Debug($"{nameof(LoadConnectedAndroidDevicesAsync)}: read device [{deviceId}] properties.");
+                            _logger.Debug(
+                                $"{nameof(LoadConnectedAndroidDevicesAsync)}: read device [{deviceId}] properties.");
                             var deviceName = GetDeviceName(deviceId);
 
                             if (string.IsNullOrWhiteSpace(deviceName))
                             {
-                                _logger.Error($"{nameof(LoadConnectedAndroidDevicesAsync)}: Failed to get deviceName to device with id: '" + deviceId + "'");
+                                _logger.Error(
+                                    $"{nameof(LoadConnectedAndroidDevicesAsync)}: Failed to get deviceName to device with id: '" +
+                                    deviceId + "'");
                                 continue;
                             }
 
@@ -134,8 +139,9 @@ namespace MobileManager.Services
                     }
                     else
                     {
-                        _logger.Error($"{nameof(LoadConnectedAndroidDevicesAsync)}: Failed connecting to " + _restClient.Endpoint +
-                                     " [STOP]");
+                        _logger.Error($"{nameof(LoadConnectedAndroidDevicesAsync)}: Failed connecting to " +
+                                      _restClient.Endpoint +
+                                      " [STOP]");
                         var sleep = AppConfigurationProvider.Get<ManagerConfiguration>().GlobalReconnectTimeout;
                         _logger.Info($"{nameof(LoadConnectedAndroidDevicesAsync)}: Sleep for [ms]: {sleep}");
                         Thread.Sleep(sleep);
@@ -153,7 +159,8 @@ namespace MobileManager.Services
             if (cancellationToken.IsCancellationRequested)
             {
                 var result = ExternalProcesses.RunProcessAndReadOutput("adb", "kill-server");
-                _logger.Debug($"{nameof(LoadConnectedAndroidDevicesAsync)}: Stop ADB server to release ports - output:{result}");
+                _logger.Debug(
+                    $"{nameof(LoadConnectedAndroidDevicesAsync)}: Stop ADB server to release ports - output:{result}");
             }
         }
 
@@ -276,7 +283,8 @@ namespace MobileManager.Services
                     return true;
                 }
 
-                _logger.Info($"{nameof(IsDeviceAlreadyInDevicePoolAsync)}: Device " + deviceId + " is already stored in database.");
+                _logger.Info($"{nameof(IsDeviceAlreadyInDevicePoolAsync)}: Device " + deviceId +
+                             " is already stored in database.");
                 return true;
             }
 

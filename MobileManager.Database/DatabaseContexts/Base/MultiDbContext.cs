@@ -5,7 +5,7 @@ using MobileManager.Database.Extensions;
 
 namespace MobileManager.Database.DatabaseContexts.Base
 {
-    public class MultiDbContext: DbContext
+    public class MultiDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

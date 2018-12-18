@@ -10,22 +10,22 @@
         /// </summary>
         /// <value>The listening port.</value>
         int ListeningPort { get; }
-        
+
         /// <summary>
         /// Gets or sets the listening IP address.
         /// </summary>
         /// <value>The listening ip address.</value>
         string ListeningIpAddress { get; }
-        
+
         /// <summary>
         /// Gets or sets the local ip address.
         /// </summary>
         string LocalIpAddress { get; }
 
         /// <summary>
-        /// Gets or sets the IOSD evice service refresh time.
+        /// Gets or sets the IOS Device service refresh time.
         /// </summary>
-        /// <value>The IOSD evice service refresh time.</value>
+        /// <value>The IOS Device service refresh time.</value>
         int IosDeviceServiceRefreshTime { get; }
 
         /// <summary>
@@ -81,17 +81,17 @@
         /// </summary>
         /// <value>The xcode path.</value>
         string XcodePath { get; }
-        
+
         /// <summary>
         /// Gets the Android service enabled value.
         /// </summary>
         bool AndroidServiceEnabled { get; }
-        
+
         /// <summary>
         /// Gets the IOS service enabled value.
         /// </summary>
         bool IosServiceEnabled { get; }
-        
+
         /// <summary>
         /// iOS developer certificate token
         /// </summary>

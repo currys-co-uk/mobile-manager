@@ -8,6 +8,7 @@ namespace MobileManager.Models.Reservations
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
         public String DeviceId { get; set; }
         public DeviceType DeviceType { get; set; }
     }

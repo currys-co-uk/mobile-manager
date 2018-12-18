@@ -124,9 +124,9 @@ namespace MobileManager.Services
         }
 
         /// <summary>
-        /// Ises the process in background running.
+        /// Starts the process in background running.
         /// </summary>
-        /// <returns><c>true</c>, if process in background running was ised, <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c>, if process in background running was started, <c>false</c> otherwise.</returns>
         /// <param name="processId">Process identifier.</param>
         public static bool IsProcessInBackgroundRunning(int processId)
         {

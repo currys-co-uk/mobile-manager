@@ -57,7 +57,7 @@ namespace MobileManager.Database.Repositories
                 scope.Complete();
             }
         }
-        
+
         /// <inheritdoc />
         public void Add(IEnumerable<Device> entities)
         {
@@ -89,7 +89,7 @@ namespace MobileManager.Database.Repositories
 
             return device;
         }
-        
+
         /// <inheritdoc />
         /// <summary>
         /// Remove the specified id.
