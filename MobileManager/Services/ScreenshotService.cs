@@ -10,13 +10,17 @@ using SixLabors.ImageSharp.Processing;
 
 namespace MobileManager.Services
 {
+    /// <inheritdoc>
+    ///     <cref>IScreenshotService</cref>
+    /// </inheritdoc>
     /// <summary>
     /// Screenshot service.
     /// </summary>
-    public class ScreenshotService : ControllerExtensions
+    public class ScreenshotService : ControllerExtensions, IScreenshotService
     {
         private readonly IManagerLogger _logger;
 
+        /// <inheritdoc />
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -26,6 +30,7 @@ namespace MobileManager.Services
             _logger = logger;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Takes the screenshot ios device.
         /// </summary>
@@ -37,7 +42,7 @@ namespace MobileManager.Services
             Directory.CreateDirectory(screenshotFolder);
             var screenshotFilePath = Path.Combine(screenshotFolder, $"{device.Id}.tiff");
 
-            string screenshotRet = ExternalProcesses.RunProcessAndReadOutput("idevicescreenshot",
+            var screenshotRet = ExternalProcesses.RunProcessAndReadOutput("idevicescreenshot",
                 $" -u {device.Id} {screenshotFilePath}", 10000);
             _logger.Debug(screenshotRet);
 
@@ -62,6 +67,7 @@ namespace MobileManager.Services
             return File(image, "image/tiff");
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Takes the screenshot android device.
         /// </summary>
@@ -76,7 +82,7 @@ namespace MobileManager.Services
                 var screenshotFilePath = Path.Combine(screenshotFolder, $"{device.Id}.png");
 
                 // adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
-                string screenshotRet = ExternalProcesses.RunShellProcess("adb",
+                var screenshotRet = ExternalProcesses.RunShellProcess("adb",
                     $" -s {device.Id} exec-out 'screencap -p' > {screenshotFilePath}; exit 0", 10000);
                 _logger.Debug(screenshotRet);
 
@@ -114,6 +120,7 @@ namespace MobileManager.Services
             }
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Loads the screenshot for offline device.
         /// </summary>

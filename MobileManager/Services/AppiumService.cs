@@ -88,11 +88,13 @@ namespace MobileManager.Services
                 usedAppiumPorts.Add(process.WdaLocalPort);
             }
 
-            _logger.Debug($"{nameof(StartAppiumForDeviceId)} - usedAppiumPorts: {JsonConvert.SerializeObject(usedAppiumPorts)}");
+            _logger.Debug(
+                $"{nameof(StartAppiumForDeviceId)} - usedAppiumPorts: {JsonConvert.SerializeObject(usedAppiumPorts)}");
 
             var appiumPort = GetFreePortAsyncMac(configuration, usedAppiumPorts);
             usedAppiumPorts.Add(appiumPort);
-            _logger.Debug($"{nameof(StartAppiumForDeviceId)} - new appiumPort: {JsonConvert.SerializeObject(appiumPort)}");
+            _logger.Debug(
+                $"{nameof(StartAppiumForDeviceId)} - new appiumPort: {JsonConvert.SerializeObject(appiumPort)}");
 
             var appiumBootstrapPort = GetFreePortAsyncMac(configuration, usedAppiumPorts);
             usedAppiumPorts.Add(appiumBootstrapPort);
@@ -163,7 +165,8 @@ namespace MobileManager.Services
             var processId = "";
             if (runningAppiumProcess.Count() != 1)
             {
-                _logger.Error($"{nameof(StartAppiumForDeviceId)}: Multiple appium processes running with deviceId={deviceId}. Killing them all...");
+                _logger.Error(
+                    $"{nameof(StartAppiumForDeviceId)}: Multiple appium processes running with deviceId={deviceId}. Killing them all...");
                 ExternalProcesses.StopProcessRunningInBackground(deviceId);
             }
             else
@@ -189,7 +192,7 @@ namespace MobileManager.Services
 
             _logger.Debug(
                 $"{nameof(StartAppiumForDeviceId)} - finished adding appiumProcess: with result [{result}].");
-            
+
             if (device.Type == DeviceType.IOS)
             {
                 _logger.Debug($"{nameof(StartAppiumForDeviceId)} - starting iosWebkit for ios device {device}.");
@@ -200,7 +203,8 @@ namespace MobileManager.Services
                     _logger.Error(
                         $"{nameof(StartAppiumForDeviceId)} - ios_webkit_debug_proxy process failed to start successfully.");
 
-                    throw new Exception($"{nameof(StartAppiumForDeviceId)}: ios_webkit_debug_proxy process failed to start successfully.");
+                    throw new Exception(
+                        $"{nameof(StartAppiumForDeviceId)}: ios_webkit_debug_proxy process failed to start successfully.");
                 }
 
                 _logger.Debug($"{nameof(StartAppiumForDeviceId)} - starting IdeviceSyslog for ios device {device}.");

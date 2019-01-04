@@ -1,12 +1,10 @@
-﻿using MobileManager.Controllers;
-using Moq;
-using Xunit;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using System.Net.Http;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using MobileManager.Configuration.Interfaces;
+using MobileManager.Controllers;
 using MobileManager.Database.Repositories.Interfaces;
 using MobileManager.Http.Clients;
 using MobileManager.Http.Clients.Interfaces;
@@ -14,8 +12,10 @@ using MobileManager.Logging.Logger;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Enums;
 using MobileManager.Models.Reservations;
-using RichardSzalay.MockHttp;
+using Moq;
 using Newtonsoft.Json;
+using RichardSzalay.MockHttp;
+using Xunit;
 
 namespace MobileManagerTests
 {
@@ -77,7 +77,7 @@ namespace MobileManagerTests
         private static readonly IManagerLogger Logger = new ManagerLogger();
         private readonly RestClient _restClient;
         private readonly string _httpLocalhost;
-        
+
         private readonly Mock<IManagerConfiguration> _config;
 
         public ReservationQueueControllerTest()
@@ -87,7 +87,7 @@ namespace MobileManagerTests
             _config.Setup(c => c.ListeningPort).Returns(9876);
             _config.Setup(c => c.AppiumLogFilePath).Returns("appiumLogs");
             _config.Setup(c => c.IdeviceSyslogFolderPath).Returns("syslogs");
-            
+
             _restClient = new RestClient(_config.Object, Logger);
 
             _httpLocalhost =

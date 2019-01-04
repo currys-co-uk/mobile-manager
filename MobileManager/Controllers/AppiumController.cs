@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 
 namespace MobileManager.Controllers
 {
+    /// <inheritdoc cref="IAppiumController" />
     /// <summary>
     /// Appium controller.
     /// </summary>
@@ -29,7 +30,8 @@ namespace MobileManager.Controllers
         /// <param name="restClient">Rest client.</param>
         /// <param name="appiumRepository">Appium repository.</param>
         /// <param name="logger">Logger</param>
-        public AppiumController(IRestClient restClient, IRepository<AppiumProcess> appiumRepository, IManagerLogger logger) : base(logger)
+        public AppiumController(IRestClient restClient, IRepository<AppiumProcess> appiumRepository,
+            IManagerLogger logger) : base(logger)
         {
             _restClient = restClient;
             _appiumRepository = appiumRepository;
@@ -71,9 +73,10 @@ namespace MobileManager.Controllers
                 return StatusCodeExtension(500, "Failed to Add AppiumProcess in database. " + ex.Message);
             }
 
-            _logger.Debug(string.Format("Created new appiumProcess: [{0}]", JsonConvert.SerializeObject(appiumProcess)));
+            _logger.Debug(string.Format("Created new appiumProcess: [{0}]",
+                JsonConvert.SerializeObject(appiumProcess)));
 
-            return CreatedAtRoute("getAppiumProcess", new { id = appiumProcess.DeviceId }, appiumProcess);
+            return CreatedAtRoute("getAppiumProcess", new {id = appiumProcess.DeviceId}, appiumProcess);
         }
 
         /// <inheritdoc />
@@ -142,6 +145,7 @@ namespace MobileManager.Controllers
             {
                 return NotFoundExtension("AppiumProcess not found in database.");
             }
+
             return JsonExtension(appiumProcess);
         }
     }

@@ -7,6 +7,7 @@ using MobileManager.Logging.Logger;
 
 namespace MobileManager.Controllers
 {
+    /// <inheritdoc cref="IManagerConfigurationController" />
     /// <summary>
     /// Configuration controller.
     /// </summary>
@@ -34,7 +35,7 @@ namespace MobileManager.Controllers
         public IActionResult Get()
         {
             LogRequestToDebug();
-            
+
             return JsonExtension(AppConfigurationProvider.Get<ManagerConfiguration>());
         }
 

@@ -1,41 +1,41 @@
 ﻿{
-  "TableNames": {
-    "MsSql": "Reservation",
-    "Sqlite": "Reservation",
-    "PostgreSql": "reservation"
-  },
-  "PropertyMappings": [
-    {
-      "PropertyName": "Id",
-      "Mappings": {
-        "MsSql": "Id",
-        "Sqlite": "Id",
-        "PostgreSql": "id"
-      }
+    "TableNames": {
+        "MsSql": "Reservation",
+        "Sqlite": "Reservation",
+        "PostgreSql": "reservation"
     },
-    {
-      "PropertyName": "DateCreated",
-      "Mappings": {
-        "MsSql": "DateCreated",
-        "Sqlite": "DateCreated",
-        "PostgreSql": "date_created"
-      }
-    },
-    {
-      "PropertyName": "Available",
-      "Mappings": {
-        "MsSql": "Available",
-        "Sqlite": "Available",
-        "PostgreSql": "available"
-      }
-    },
-    {
-      "PropertyName": "FailedToApply",
-      "Mappings": {
-        "MsSql": "FailedToApply",
-        "Sqlite": "FailedToApply",
-        "PostgreSql": "failed_to_apply"
-      }
-    }
-  ]
+    "PropertyMappings": [
+        {
+            "PropertyName": "Id",
+            "Mappings": {
+                "MsSql": "Id",
+                "Sqlite": "Id",
+                "PostgreSql": "id"
+            }
+        },
+        {
+            "PropertyName": "DateCreated",
+            "Mappings": {
+                "MsSql": "DateCreated",
+                "Sqlite": "DateCreated",
+                "PostgreSql": "date_created"
+            }
+        },
+        {
+            "PropertyName": "Available",
+            "Mappings": {
+                "MsSql": "Available",
+                "Sqlite": "Available",
+                "PostgreSql": "available"
+            }
+        },
+        {
+            "PropertyName": "FailedToApply",
+            "Mappings": {
+                "MsSql": "FailedToApply",
+                "Sqlite": "FailedToApply",
+                "PostgreSql": "failed_to_apply"
+            }
+        }
+    ]
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -95,10 +95,6 @@
     <Content Update="DbMappingFiles\ReservedDevice.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logger" />
-    <Folder Include="Logs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

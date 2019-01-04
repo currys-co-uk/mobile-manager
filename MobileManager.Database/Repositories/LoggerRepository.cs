@@ -19,7 +19,7 @@ namespace MobileManager.Database.Repositories
             _context.Logger.Add(entity);
             _context.SaveChanges();
         }
-        
+
         public void Add(IEnumerable<LogMessage> entity)
         {
             _context.Logger.AddRange(entity);

@@ -9,6 +9,7 @@ using MobileManager.Logging.Logger;
 
 namespace MobileManager.Controllers
 {
+    /// <inheritdoc cref="IAppiumLogController" />
     /// <summary>
     /// Appium log controller.
     /// </summary>
@@ -36,7 +37,7 @@ namespace MobileManager.Controllers
         /// <summary>
         /// Delete the appium log by device identifier.
         /// </summary>
-        /// <returns>Tnull</returns>
+        /// <returns>ActionResult</returns>
         /// <param name="id">Device Identifier.</param>
         /// <response code="200">Appium log deleted successfully.</response>
         /// <response code="404">Appium log or device id not found.</response>
@@ -110,7 +111,8 @@ namespace MobileManager.Controllers
             var configuration = await _restClient.GetManagerConfiguration();
 
 
-            if (configuration.AppiumLogFilePath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
+            if (configuration.AppiumLogFilePath.EndsWith(Path.DirectorySeparatorChar.ToString(),
+                StringComparison.Ordinal))
             {
                 appiumLogPath = configuration.AppiumLogFilePath + deviceId + ".log";
             }
@@ -126,6 +128,7 @@ namespace MobileManager.Controllers
                 {
                     homeDir = Environment.GetEnvironmentVariable("HOME");
                 }
+
                 appiumLogPath = appiumLogPath.Replace("~", homeDir);
             }
 

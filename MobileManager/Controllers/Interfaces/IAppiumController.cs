@@ -39,6 +39,5 @@ namespace MobileManager.Controllers.Interfaces
         /// <param name="id">Identifier.</param>
         [HttpDelete("{id}")]
         IActionResult Delete(string id);
-
     }
 }

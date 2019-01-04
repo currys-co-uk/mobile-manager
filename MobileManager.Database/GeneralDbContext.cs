@@ -8,8 +8,9 @@ using MobileManager.Models.Reservations;
 
 namespace MobileManager.Database
 {
-    public class GeneralDbContext: MultiDbContext
+    public class GeneralDbContext : MultiDbContext
     {
+        /// <inheritdoc />
         /// <summary>
         /// On model creating.
         /// </summary>
@@ -17,24 +18,24 @@ namespace MobileManager.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.GetModelMapping<Reservation>()
-                        .GetModelMapping<RequestedDevices>()
-                        .GetModelMapping<DeviceProperties>()
-                        .GetModelMapping<ReservationApplied>()
-                        .GetModelMapping<ReservedDevice>()
-                        .GetModelMapping<AppiumProcess>()
-                        .GetModelMapping<Device>();
-            
+                .GetModelMapping<RequestedDevices>()
+                .GetModelMapping<DeviceProperties>()
+                .GetModelMapping<ReservationApplied>()
+                .GetModelMapping<ReservedDevice>()
+                .GetModelMapping<AppiumProcess>()
+                .GetModelMapping<Device>();
+
             // Cascade Delete
             modelBuilder.Entity<Reservation>()
                 .HasMany(b => b.RequestedDevices)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             modelBuilder.Entity<RequestedDevices>()
                 .HasMany(b => b.Properties)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             modelBuilder.Entity<ReservationApplied>()
                 .HasMany(b => b.ReservedDevices)
                 .WithOne()
@@ -82,7 +83,7 @@ namespace MobileManager.Database
         /// </summary>
         /// <value>The requested devices.</value>
         public DbSet<DeviceProperties> Properties { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the Logger.
         /// </summary>

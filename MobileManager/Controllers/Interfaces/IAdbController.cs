@@ -15,7 +15,7 @@ namespace MobileManager.Controllers.Interfaces
         /// <param name="adbCommand">Adb command.</param>
         [HttpPost]
         IActionResult Command([FromBody] AdbCommand adbCommand);
-        
+
         /// <summary>
         /// Execute shell ADB command on the device.
         /// </summary>

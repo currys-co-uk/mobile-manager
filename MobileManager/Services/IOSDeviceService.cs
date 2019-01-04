@@ -14,9 +14,11 @@ using MobileManager.Logging.Logger;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Enums;
 using MobileManager.Models.Devices.Interfaces;
+using MobileManager.Utils;
 
 namespace MobileManager.Services
 {
+    /// <inheritdoc cref="IHostedService" />
     /// <summary>
     /// IOS Device connector.
     /// </summary>
@@ -25,7 +27,7 @@ namespace MobileManager.Services
         private readonly IManagerLogger _logger;
         private readonly RestClient _restClient;
         private Task _iosDeviceService;
-        private DeviceUtils _deviceUtils;
+        private readonly DeviceUtils _deviceUtils;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:DeviceConnectors.iOS.IOSDeviceConnector"/> class.
@@ -63,7 +65,7 @@ namespace MobileManager.Services
         /// <summary>
         /// Loads the connected IOS Devices async.
         /// </summary>
-        /// <returns>The connected IOSD evices async.</returns>
+        /// <returns>The connected IOS Devices async.</returns>
         private async Task LoadConnectedIosDevicesAsync(CancellationToken cancellationToken)
         {
             _logger.Info($"{nameof(LoadConnectedIosDevicesAsync)} Thread started.");

@@ -1,35 +1,36 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Threading;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.Swagger;
-using System.IO;
-using Microsoft.AspNetCore.Http;
-using System.Net;
-using System.Threading;
-using Microsoft.AspNetCore.Diagnostics;
-using React.AspNet;
 using MobileManager.Appium;
 using MobileManager.Configuration;
 using MobileManager.Configuration.ConfigurationProvider;
 using MobileManager.Configuration.Interfaces;
 using MobileManager.Controllers;
 using MobileManager.Controllers.Interfaces;
+using MobileManager.Database;
+using MobileManager.Database.Extensions;
 using MobileManager.Database.Repositories;
 using MobileManager.Database.Repositories.Interfaces;
 using MobileManager.Http.Clients;
 using MobileManager.Http.Clients.Interfaces;
-using MobileManager.Services;
-using MobileManager.Services.Interfaces;
-using MobileManager.Database;
-using MobileManager.Database.Extensions;
 using MobileManager.Logging.Logger;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Logger;
 using MobileManager.Models.Reservations;
-using IApplicationLifetime = Microsoft.AspNetCore.Hosting.IApplicationLifetime;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using MobileManager.Services;
+using MobileManager.Services.Interfaces;
+using Newtonsoft.Json;
+using React.AspNet;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace MobileManager
 {
@@ -89,7 +90,7 @@ namespace MobileManager
                 c.SwaggerDoc("v1", new Info {Title = "MobileManager API", Version = "v1"});
 
                 //Set the comments path for the swagger json and ui.
-                var basePath = System.AppContext.BaseDirectory;
+                var basePath = AppContext.BaseDirectory;
                 var xmlPath = Path.Combine(basePath, "MobileManager.xml");
                 c.IncludeXmlComments(xmlPath);
             });
@@ -157,7 +158,7 @@ namespace MobileManager
 
             loggerFactory.AddConsole((logText, logLevel) =>
             {
-                if (System.Diagnostics.Debugger.IsAttached)
+                if (Debugger.IsAttached)
                 {
                     return true;
                 }

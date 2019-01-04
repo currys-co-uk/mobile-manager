@@ -13,10 +13,12 @@ using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Interfaces;
 using MobileManager.Models.Reservations;
 using MobileManager.Services.Interfaces;
+using MobileManager.Utils;
 using Newtonsoft.Json;
 
 namespace MobileManager.Services
 {
+    /// <inheritdoc cref="IReservationService" />
     /// <summary>
     /// Reservation service.
     /// </summary>
@@ -26,7 +28,7 @@ namespace MobileManager.Services
         private RestClient RestClient { get; }
         private readonly AppiumService _appiumService;
         private Task _reservationService;
-        private DeviceUtils _deviceUtils;
+        private readonly DeviceUtils _deviceUtils;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:MobileManager.Services.ReservationService"/> class.
