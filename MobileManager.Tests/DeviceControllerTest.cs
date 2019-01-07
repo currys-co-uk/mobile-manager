@@ -37,6 +37,8 @@ namespace MobileManagerTests
             };
         }
 
+        private readonly IExternalProcesses _externalProcesses = new Mock<IExternalProcesses>().Object;
+
         [Fact]
         public void GetAllDevices()
         {
@@ -47,7 +49,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
 
             // Act
             var result = controller.GetAll();
@@ -69,7 +72,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetAll();
 
@@ -88,7 +92,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetById(_device1.Id);
 
@@ -107,7 +112,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetById("");
 
@@ -125,7 +131,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetById(_device2.Id);
 
@@ -142,7 +149,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.Create(_device1);
 
@@ -160,7 +168,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.Create(null);
 
@@ -179,7 +188,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.Create(_device1);
 
@@ -198,7 +208,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.Create(device);
 
@@ -216,7 +227,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.Create(device);
 
@@ -233,7 +245,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.Create(_device1);
 
@@ -255,7 +268,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
 
             var result = controller.Update(_device1.Id, device);
@@ -275,7 +289,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
 
             var result = controller.Update(_device1.Id, null);
@@ -294,7 +309,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
 
             var result = controller.Update(_device1.Id, _device2);
@@ -315,7 +331,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
 
             var result = controller.Update(_device1.Id, device);
@@ -339,7 +356,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
 
             var result = controller.Update(_device1.Id, device);
@@ -360,7 +378,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             controller.Create(_device1);
 
             // Act
@@ -382,7 +401,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             controller.Create(_device1);
 
             // Act
@@ -405,7 +425,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             controller.Create(_device1);
 
             // Act
@@ -427,7 +448,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             controller.Create(_device1);
 
             // Act
@@ -455,7 +477,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetPropertiesById(device.Id);
 
@@ -474,7 +497,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetPropertiesById(_device1.Id);
 
@@ -502,7 +526,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetAllPropertiesKeys();
 
@@ -531,7 +556,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetSeleniumConfigById(device.Id);
 
@@ -554,7 +580,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetSeleniumConfigById(device.Id);
 
@@ -576,7 +603,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetSeleniumConfigById(device.Id);
 
@@ -597,7 +625,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetSeleniumConfigById(device.Id);
 
@@ -618,7 +647,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetSeleniumConfigById(device.Id);
 
@@ -640,7 +670,7 @@ namespace MobileManagerTests
             mockDeviceUtils.Setup(x => x.RestartDevice(_device1)).Returns(string.Empty);
 
             var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
-                mockDeviceUtils.Object);
+                mockDeviceUtils.Object, _externalProcesses);
             // Act
             var result = controller.RestartDevice(_device1.Id);
 
@@ -658,7 +688,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.RestartDevice(_device1.Id);
 
@@ -678,7 +709,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.RestartDevice(device.Id);
 
@@ -701,7 +733,7 @@ namespace MobileManagerTests
             mockDeviceUtils.Setup(x => x.RestartDevice(_device1)).Returns("ERROR");
 
             var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
-                mockDeviceUtils.Object);
+                mockDeviceUtils.Object, _externalProcesses);
             // Act
             var result = controller.RestartDevice(_device1.Id);
 
@@ -720,7 +752,8 @@ namespace MobileManagerTests
 
             var mockLogger = new Mock<IManagerLogger>();
             var mockConfiguration = new Mock<IManagerConfiguration>();
-            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object);
+            var controller = new DevicesController(mockRepository.Object, mockLogger.Object, mockConfiguration.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetDeviceScreenshotById(_device1.Id);
 
@@ -751,7 +784,8 @@ namespace MobileManagerTests
                 mockLogger.Object,
                 mockConfiguration.Object,
                 mockDeviceUtils.Object,
-                mockScreenshotService.Object);
+                mockScreenshotService.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetDeviceScreenshotById(device.Id);
 
@@ -782,7 +816,8 @@ namespace MobileManagerTests
                 mockLogger.Object,
                 mockConfiguration.Object,
                 mockDeviceUtils.Object,
-                mockScreenshotService.Object);
+                mockScreenshotService.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetDeviceScreenshotById(device.Id);
 
@@ -813,7 +848,8 @@ namespace MobileManagerTests
                 mockLogger.Object,
                 mockConfiguration.Object,
                 mockDeviceUtils.Object,
-                mockScreenshotService.Object);
+                mockScreenshotService.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetDeviceScreenshotById(device.Id);
 
@@ -842,7 +878,8 @@ namespace MobileManagerTests
                 mockLogger.Object,
                 mockConfiguration.Object,
                 mockDeviceUtils.Object,
-                mockScreenshotService.Object);
+                mockScreenshotService.Object,
+                _externalProcesses);
             // Act
             var result = controller.GetDeviceScreenshotById(device.Id);
 
@@ -871,7 +908,8 @@ namespace MobileManagerTests
                 mockLogger.Object,
                 mockConfiguration.Object,
                 mockDeviceUtils.Object,
-                mockScreenshotService.Object);
+                mockScreenshotService.Object,
+                _externalProcesses);
 
             controller.ScreenshotLocked.Add(device.Id);
             controller.ScreenshotLockedTimeout = 500;
@@ -907,7 +945,8 @@ namespace MobileManagerTests
                 mockLogger.Object,
                 mockConfiguration.Object,
                 mockDeviceUtils.Object,
-                mockScreenshotService.Object);
+                mockScreenshotService.Object,
+                _externalProcesses);
 
             // Act
             var result = controller.GetDeviceScreenshotById(device.Id);
@@ -940,7 +979,8 @@ namespace MobileManagerTests
                 mockLogger.Object,
                 mockConfiguration.Object,
                 mockDeviceUtils.Object,
-                mockScreenshotService.Object);
+                mockScreenshotService.Object,
+                _externalProcesses);
 
             // Act
             var result = controller.GetDeviceScreenshotById(device.Id);
@@ -973,7 +1013,8 @@ namespace MobileManagerTests
                 mockLogger.Object,
                 mockConfiguration.Object,
                 mockDeviceUtils.Object,
-                mockScreenshotService.Object);
+                mockScreenshotService.Object,
+                _externalProcesses);
 
             // Act
             var result = controller.GetDeviceScreenshotById(device.Id);
@@ -1005,7 +1046,8 @@ namespace MobileManagerTests
                 mockLogger.Object,
                 mockConfiguration.Object,
                 mockDeviceUtils.Object,
-                mockScreenshotService.Object);
+                mockScreenshotService.Object,
+                _externalProcesses);
 
             // Act
             var result = controller.GetDeviceScreenshotById(device.Id);

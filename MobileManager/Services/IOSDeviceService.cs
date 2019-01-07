@@ -28,14 +28,18 @@ namespace MobileManager.Services
         private readonly RestClient _restClient;
         private Task _iosDeviceService;
         private readonly DeviceUtils _deviceUtils;
+        private readonly IExternalProcesses _externalProcesses;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:DeviceConnectors.iOS.IOSDeviceConnector"/> class.
         /// </summary>
-        public IosDeviceService(IManagerConfiguration configuration, IManagerLogger logger)
+        public IosDeviceService(IManagerConfiguration configuration, IManagerLogger logger,
+            IExternalProcesses externalProcesses)
         {
             _logger = logger;
-            _deviceUtils = new DeviceUtils(_logger);
+            _externalProcesses = externalProcesses;
+            _deviceUtils = new DeviceUtils(_logger, _externalProcesses);
             _logger.Info("Running IOSDeviceConnector service.");
             _restClient = new RestClient(configuration, _logger);
         }
@@ -77,7 +81,7 @@ namespace MobileManager.Services
 
                     if (await _restClient.TryToConnect())
                     {
-                        var output = ExternalProcesses.RunProcessAndReadOutput("idevice_id", "-l");
+                        var output = _externalProcesses.RunProcessAndReadOutput("idevice_id", "-l");
                         var listOfIosDeviceIds =
                             output.Split(new[] {Environment.NewLine}, StringSplitOptions.None).ToList();
                         listOfIosDeviceIds = listOfIosDeviceIds.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()
@@ -113,7 +117,7 @@ namespace MobileManager.Services
                             }
 
                             var deviceName =
-                                ExternalProcesses.RunProcessAndReadOutput("idevicename", $"-u {deviceId}");
+                                _externalProcesses.RunProcessAndReadOutput("idevicename", $"-u {deviceId}");
 
                             if (string.IsNullOrEmpty(deviceName) || deviceName.Contains("ERROR"))
                             {
@@ -188,11 +192,11 @@ namespace MobileManager.Services
         /// </summary>
         /// <returns>The device properties by identifier.</returns>
         /// <param name="deviceId">Device identifier.</param>
-        private static Dictionary<string, string> GetDevicePropertiesById(string deviceId)
+        private Dictionary<string, string> GetDevicePropertiesById(string deviceId)
         {
             var properties = new Dictionary<string, string>();
 
-            var devicePropertiesOutput = ExternalProcesses.RunProcessAndReadOutput("ideviceinfo", "-u " + deviceId);
+            var devicePropertiesOutput = _externalProcesses.RunProcessAndReadOutput("ideviceinfo", "-u " + deviceId);
 
             using (var reader = new StringReader(devicePropertiesOutput))
             {
@@ -248,7 +252,7 @@ namespace MobileManager.Services
                                                 ". Consider updating Xcode.");
             }
 
-            var imageSignature = ExternalProcesses.RunProcessAndReadOutput("ideviceimagemounter",
+            var imageSignature = _externalProcesses.RunProcessAndReadOutput("ideviceimagemounter",
                 $" -u {device.Id} -l", 10000);
 
             _logger.Debug($"{nameof(MountDeveloperDiskAsync)}: {nameof(imageSignature)} [{imageSignature}]");
@@ -260,7 +264,7 @@ namespace MobileManager.Services
                 return;
             }
 
-            var ret = ExternalProcesses.RunProcessAndReadOutput("ideviceimagemounter",
+            var ret = _externalProcesses.RunProcessAndReadOutput("ideviceimagemounter",
                 $" -u {device.Id} -t Developer \"{developerDiskImagePath}\"",
                 10000);
 

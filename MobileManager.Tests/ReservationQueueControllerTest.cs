@@ -12,6 +12,7 @@ using MobileManager.Logging.Logger;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Enums;
 using MobileManager.Models.Reservations;
+using MobileManager.Services;
 using Moq;
 using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
@@ -74,6 +75,8 @@ namespace MobileManagerTests
             };
         }
 
+        private readonly IExternalProcesses _externalProcesses = new Mock<IExternalProcesses>().Object;
+
         private static readonly IManagerLogger Logger = new ManagerLogger();
         private readonly RestClient _restClient;
         private readonly string _httpLocalhost;
@@ -101,7 +104,7 @@ namespace MobileManagerTests
             var mockRepository = new Mock<IRepository<Reservation>>();
             mockRepository.Setup(mpr => mpr.GetAll()).Returns(GetTestReservations());
 
-            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger, _externalProcesses);
 
             // Act
             var result = controller.GetAll();
@@ -120,7 +123,7 @@ namespace MobileManagerTests
             var mockRepository = new Mock<IRepository<Reservation>>();
             mockRepository.Setup(mpr => mpr.GetAll()).Returns(new List<Reservation>());
 
-            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger, _externalProcesses);
 
             // Act
             var result = controller.GetAll();
@@ -137,7 +140,7 @@ namespace MobileManagerTests
             var mockRepository = new Mock<IRepository<Reservation>>();
             mockRepository.Setup(mpr => mpr.Find(_reservation1.Id)).Returns(_reservation1);
 
-            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger, _externalProcesses);
 
             // Act
             var result = controller.GetById(_reservation1.Id);
@@ -154,7 +157,7 @@ namespace MobileManagerTests
             var mockRepository = new Mock<IRepository<Reservation>>();
             mockRepository.Setup(mpr => mpr.Find(_reservation2.Id)).Returns(_reservation2);
 
-            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger, _externalProcesses);
 
             // Act
             var result = controller.GetById(_reservation2.Id);
@@ -171,7 +174,7 @@ namespace MobileManagerTests
             var mockRepository = new Mock<IRepository<Reservation>>();
             mockRepository.Setup(mpr => mpr.Find(_reservation1.Id)).Returns((Reservation) null);
 
-            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger, _externalProcesses);
 
             // Act
             var result = controller.GetById(_reservation1.Id);
@@ -187,7 +190,7 @@ namespace MobileManagerTests
             var mockRepository = new Mock<IRepository<Reservation>>();
             mockRepository.Setup(mpr => mpr.Find("")).Returns((Reservation) null);
 
-            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, _restClient, Logger, _externalProcesses);
 
             // Act
             var result = controller.GetById("");
@@ -214,7 +217,7 @@ namespace MobileManagerTests
 
             var restClient = new RestClient(_config.Object,
                 new HttpClient(mockHttp), Logger);
-            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger, _externalProcesses);
 
             // Act
             var result = await controller.CreateAsync(_reservation1);
@@ -240,7 +243,7 @@ namespace MobileManagerTests
 
             var restClient = new RestClient(_config.Object,
                 new HttpClient(mockHttp), Logger);
-            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger, _externalProcesses);
 
             // Act
             var result = await controller.CreateAsync(_reservation1);
@@ -271,7 +274,7 @@ namespace MobileManagerTests
 
             var restClient = new RestClient(_config.Object,
                 new HttpClient(mockHttp), Logger);
-            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger, _externalProcesses);
 
             // Act
             var result = await controller.CreateAsync(reservation);
@@ -300,7 +303,7 @@ namespace MobileManagerTests
 
             var restClient = new RestClient(_config.Object,
                 new HttpClient(mockHttp), Logger);
-            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger, _externalProcesses);
 
             // Act
             var result = await controller.CreateAsync(reservation);
@@ -342,7 +345,7 @@ namespace MobileManagerTests
 
             var restClient = new RestClient(_config.Object,
                 new HttpClient(mockHttp), Logger);
-            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger, _externalProcesses);
 
             // Act
             var result = await controller.CreateAsync(reservationDuplicateDeviceId);
@@ -371,7 +374,7 @@ namespace MobileManagerTests
 
             var restClient = new RestClient(_config.Object,
                 new HttpClient(mockHttp), Logger);
-            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger, _externalProcesses);
 
             // Act
             var result = await controller.CreateAsync(_reservation1);
@@ -406,7 +409,7 @@ namespace MobileManagerTests
 
             var restClient = new RestClient(_config.Object,
                 new HttpClient(mockHttp), Logger);
-            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger);
+            var controller = new ReservationsQueueController(mockRepository.Object, restClient, Logger, _externalProcesses);
 
             // Act
             var result = await controller.CreateAsync(_reservation1);

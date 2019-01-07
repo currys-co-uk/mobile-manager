@@ -31,6 +31,8 @@ namespace MobileManager.Controllers
         private readonly IManagerConfiguration _configuration;
         private readonly IScreenshotService _screenshotService;
         private readonly IDeviceUtils _deviceUtils;
+        private readonly IExternalProcesses _externalProcesses;
+
 
         /// <inheritdoc />
         /// <summary>
@@ -39,37 +41,41 @@ namespace MobileManager.Controllers
         /// <param name="devicesRepository">Devices repository.</param>
         /// <param name="logger">Logger.</param>
         /// <param name="configuration">Configuration</param>
+        /// <param name="externalProcesses"></param>
         public DevicesController(IRepository<Device> devicesRepository, IManagerLogger logger,
-            IManagerConfiguration configuration) : base(logger)
+            IManagerConfiguration configuration, IExternalProcesses externalProcesses) : base(logger)
         {
             _devicesRepository = devicesRepository;
             _logger = logger;
             _configuration = configuration;
-            _deviceUtils = new DeviceUtils(_logger);
-            _screenshotService = new ScreenshotService(_logger);
+            _externalProcesses = externalProcesses;
+            _deviceUtils = new DeviceUtils(_logger, _externalProcesses);
+            _screenshotService = new ScreenshotService(_logger, _externalProcesses);
         }
 
         /// <inheritdoc />
         public DevicesController(IRepository<Device> devicesRepository, IManagerLogger logger,
-            IManagerConfiguration configuration, IDeviceUtils deviceUtils) : base(logger)
+            IManagerConfiguration configuration, IDeviceUtils deviceUtils, IExternalProcesses externalProcesses) : base(logger)
         {
             _devicesRepository = devicesRepository;
             _logger = logger;
             _configuration = configuration;
             _deviceUtils = deviceUtils;
-            _screenshotService = new ScreenshotService(_logger);
+            _externalProcesses = externalProcesses;
+            _screenshotService = new ScreenshotService(_logger, _externalProcesses);
         }
 
         /// <inheritdoc />
         public DevicesController(IRepository<Device> devicesRepository, IManagerLogger logger,
             IManagerConfiguration configuration, IDeviceUtils deviceUtils,
-            IScreenshotService screenshotService) : base(logger)
+            IScreenshotService screenshotService, IExternalProcesses externalProcesses) : base(logger)
         {
             _devicesRepository = devicesRepository;
             _logger = logger;
             _configuration = configuration;
             _deviceUtils = deviceUtils;
             _screenshotService = screenshotService;
+            _externalProcesses = externalProcesses;
         }
 
         /// <inheritdoc />

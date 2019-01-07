@@ -27,13 +27,16 @@ namespace MobileManager.Services
 
         private readonly string _appiumLogFolderPath;
         private readonly string _ideviceSyslogFolderPath;
+        private readonly IExternalProcesses _externalProcesses;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:MobileManager.Services.AppiumService"/> class.
         /// </summary>
-        public AppiumService(IManagerConfiguration configuration, IManagerLogger logger)
+        public AppiumService(IManagerConfiguration configuration, IManagerLogger logger, IExternalProcesses externalProcesses)
         {
             _logger = logger;
+            _externalProcesses = externalProcesses;
             _restClient = new RestClient(configuration, _logger);
 
             _appiumLogFolderPath = EnsureLogFolderIsCreated(configuration.AppiumLogFilePath);
@@ -148,13 +151,13 @@ namespace MobileManager.Services
             _logger.Debug(
                 $"{nameof(StartAppiumForDeviceId)} - starting appium with args: {JsonConvert.SerializeObject(appiumArguments)}");
 
-            var appiumPid = ExternalProcesses.RunProcessInBackground("appium", appiumArguments);
+            var appiumPid = _externalProcesses.RunProcessInBackground("appium", appiumArguments);
 
             _logger.Debug(
                 $"{nameof(StartAppiumForDeviceId)} - appium started in terminal with pid: {JsonConvert.SerializeObject(appiumPid)}");
 
             Thread.Sleep(3000);
-            var psOutput = ExternalProcesses.RunProcessAndReadOutput("ps", "ax");
+            var psOutput = _externalProcesses.RunProcessAndReadOutput("ps", "ax");
 
             var runningAppiumProcess = psOutput.Split('\n').Where(x => x.Contains("bin/appium") && x.Contains(deviceId))
                 .ToList();
@@ -167,7 +170,7 @@ namespace MobileManager.Services
             {
                 _logger.Error(
                     $"{nameof(StartAppiumForDeviceId)}: Multiple appium processes running with deviceId={deviceId}. Killing them all...");
-                ExternalProcesses.StopProcessRunningInBackground(deviceId);
+                _externalProcesses.StopProcessRunningInBackground(deviceId);
             }
             else
             {
@@ -177,7 +180,7 @@ namespace MobileManager.Services
             }
 
             if (string.IsNullOrEmpty(processId) &&
-                !ExternalProcesses.IsProcessInBackgroundRunning(Convert.ToInt32(processId)))
+                !_externalProcesses.IsProcessInBackgroundRunning(Convert.ToInt32(processId)))
             {
                 throw new Exception($"{nameof(StartAppiumForDeviceId)}: Appium process failed to start successfully.");
             }
@@ -198,7 +201,7 @@ namespace MobileManager.Services
                 _logger.Debug($"{nameof(StartAppiumForDeviceId)} - starting iosWebkit for ios device {device}.");
 
                 var iosWebkitPid = StartIosWebkitDebugProxy(deviceId, webkitDebugProxyPort);
-                if (!ExternalProcesses.IsProcessInBackgroundRunning(iosWebkitPid))
+                if (!_externalProcesses.IsProcessInBackgroundRunning(iosWebkitPid))
                 {
                     _logger.Error(
                         $"{nameof(StartAppiumForDeviceId)} - ios_webkit_debug_proxy process failed to start successfully.");
@@ -226,31 +229,31 @@ namespace MobileManager.Services
         /// <param name="deviceId">Device identifier.</param>
         public async Task<bool> StopAppiumForDeviceIdAsync(string deviceId)
         {
-            ExternalProcesses.StopProcessRunningInBackground(deviceId);
+            _externalProcesses.StopProcessRunningInBackground(deviceId);
 
-            var psOutput = ExternalProcesses.RunProcessAndReadOutput("ps", "ax");
+            var psOutput = _externalProcesses.RunProcessAndReadOutput("ps", "ax");
             var runningIProxyForDevice = psOutput.Split('\n').Where(x => x.Contains("iproxy") && x.Contains(deviceId));
 
             _logger.Debug(
                 $"{nameof(StopAppiumForDeviceIdAsync)} - runningIProxyForDevice {JsonConvert.SerializeObject(runningIProxyForDevice)} for device {deviceId}.");
             foreach (var process in runningIProxyForDevice)
             {
-                ExternalProcesses.RunProcessAndReadOutput("kill", process);
+                _externalProcesses.RunProcessAndReadOutput("kill", process);
             }
 
             return await _restClient.RemoveAppiumProcess(deviceId);
         }
 
-        private static int StartIosWebkitDebugProxy(string deviceId, string webkitPort)
+        private int StartIosWebkitDebugProxy(string deviceId, string webkitPort)
         {
             var proxyArguments = $"-c {deviceId}:{webkitPort}";
-            return ExternalProcesses.RunProcessInBackground("ios_webkit_debug_proxy", proxyArguments);
+            return _externalProcesses.RunProcessInBackground("ios_webkit_debug_proxy", proxyArguments);
         }
 
         private int StartIdeviceSyslog(string deviceId)
         {
             var syslogArguments = $"-u {deviceId} 2>&1 > {_ideviceSyslogFolderPath}/{deviceId}.log";
-            return ExternalProcesses.RunProcessInBackground("idevicesyslog", syslogArguments);
+            return _externalProcesses.RunProcessInBackground("idevicesyslog", syslogArguments);
         }
 
         private string GetFreePortAsync(IManagerConfiguration configuration, string ignorePort)

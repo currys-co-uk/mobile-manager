@@ -9,6 +9,7 @@ using MobileManager.Database.Repositories.Interfaces;
 using MobileManager.Http.Clients.Interfaces;
 using MobileManager.Logging.Logger;
 using MobileManager.Models.Reservations;
+using MobileManager.Services;
 using MobileManager.Utils;
 using Newtonsoft.Json;
 
@@ -28,6 +29,8 @@ namespace MobileManager.Controllers
         private readonly IRestClient _restClient;
         private readonly IManagerLogger _logger;
         private readonly DeviceUtils _deviceUtils;
+        private readonly IExternalProcesses _externalProcesses;
+
 
         /// <inheritdoc />
         /// <summary>
@@ -36,13 +39,15 @@ namespace MobileManager.Controllers
         /// <param name="reservationsQueueRepository">Reservations queue repository.</param>
         /// <param name="restClient">Rest client.</param>
         /// <param name="logger">Logger.</param>
+        /// <param name="externalProcesses"></param>
         public ReservationsQueueController(IRepository<Reservation> reservationsQueueRepository,
-            IRestClient restClient, IManagerLogger logger) : base(logger)
+            IRestClient restClient, IManagerLogger logger, IExternalProcesses externalProcesses) : base(logger)
         {
             _reservationsQueueRepository = reservationsQueueRepository;
             _restClient = restClient;
             _logger = logger;
-            _deviceUtils = new DeviceUtils(_logger);
+            _externalProcesses = externalProcesses;
+            _deviceUtils = new DeviceUtils(_logger, _externalProcesses);
         }
 
         /// <summary>
