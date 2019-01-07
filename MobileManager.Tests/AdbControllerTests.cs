@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MobileManager.Configuration.Interfaces;
 using MobileManager.Controllers;
-using MobileManager.Http.Clients;
 using MobileManager.Http.Clients.Interfaces;
 using Moq;
 using Xunit;
@@ -239,7 +238,6 @@ namespace MobileManagerTests
             restClientMock.Setup(r => r.GetDevice(It.IsAny<string>())).Returns(Task.FromResult<Device>(device));
 
             var externalProcessesMock = new Mock<IExternalProcesses>();
-            const string output = "output";
             externalProcessesMock
                 .Setup(e => e.RunProcessAndReadOutput(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
                 .Throws<Exception>();
@@ -262,7 +260,6 @@ namespace MobileManagerTests
             restClientMock.Setup(r => r.GetDevice(It.IsAny<string>())).Returns(Task.FromResult<Device>(device));
 
             var externalProcessesMock = new Mock<IExternalProcesses>();
-            const string output = "output";
             externalProcessesMock
                 .Setup(e => e.RunProcessAndReadOutput(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
                 .Throws<Exception>();
