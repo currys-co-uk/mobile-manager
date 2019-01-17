@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace MobileManagerTests
+namespace MobileManagerTests.Controllers
 {
     public class ReservationQueueControllerTest
     {

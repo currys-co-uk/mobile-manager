@@ -4,16 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using MobileManager.Configuration.Interfaces;
 using MobileManager.Controllers;
 using MobileManager.Http.Clients.Interfaces;
-using Moq;
-using Xunit;
 using MobileManager.Logging.Logger;
 using MobileManager.Models.Adb;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Enums;
 using MobileManager.Services;
+using Moq;
+using Xunit;
 
-
-namespace MobileManagerTests
+namespace MobileManagerTests.Controllers
 {
     public class AdbControllerTests
     {

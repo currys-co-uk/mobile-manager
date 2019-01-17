@@ -14,7 +14,7 @@ using MobileManager.Utils;
 using Moq;
 using Xunit;
 
-namespace MobileManagerTests
+namespace MobileManagerTests.Controllers
 {
     public class DeviceControllerTest
     {

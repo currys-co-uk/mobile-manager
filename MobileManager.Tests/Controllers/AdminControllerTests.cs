@@ -13,7 +13,7 @@ using MobileManager.Models.Reservations;
 using Moq;
 using Xunit;
 
-namespace MobileManagerTests
+namespace MobileManagerTests.Controllers
 {
     public class AdminControllerTests
     {
