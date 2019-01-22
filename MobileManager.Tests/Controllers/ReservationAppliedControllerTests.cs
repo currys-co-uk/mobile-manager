@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace MobileManagerTests
+namespace MobileManagerTests.Controllers
 {
     public class ReservationAppliedControllerTests
     {
@@ -44,6 +44,7 @@ namespace MobileManagerTests
             }
         };
 
+        private readonly IExternalProcesses _externalProcesses = new Mock<IExternalProcesses>().Object;
         private static readonly IManagerLogger Logger = new Mock<IManagerLogger>().Object;
         private readonly RestClient _restClient;
         private readonly AppiumService _appiumService;
@@ -60,7 +61,7 @@ namespace MobileManagerTests
             _config.Setup(c => c.IdeviceSyslogFolderPath).Returns("syslogs");
 
             _restClient = new RestClient(_config.Object, Logger);
-            _appiumService = new AppiumService(_config.Object, Logger);
+            _appiumService = new AppiumService(_config.Object, Logger, _externalProcesses);
 
             _httpLocalhost = $"http://{_config.Object.LocalIpAddress}:{_config.Object.ListeningPort}";
         }
@@ -74,7 +75,8 @@ namespace MobileManagerTests
             mockRepository.Setup(mpr => mpr.GetAll()).Returns(appliedReservations);
 
             var controller =
-                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger);
+                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger,
+                    _externalProcesses);
 
             // Act
             var result = controller.GetAllAppliedReservations();
@@ -94,7 +96,8 @@ namespace MobileManagerTests
             mockRepository.Setup(mpr => mpr.GetAll()).Returns(new List<ReservationApplied>());
 
             var controller =
-                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger);
+                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger,
+                    _externalProcesses);
 
             // Act
             var result = controller.GetAllAppliedReservations();
@@ -112,7 +115,8 @@ namespace MobileManagerTests
             mockRepository.Setup(mpr => mpr.Find(_reservationApplied1.Id)).Returns(_reservationApplied1);
 
             var controller =
-                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger);
+                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger,
+                    _externalProcesses);
 
             // Act
             var result = controller.GetById(_reservationApplied1.Id);
@@ -130,7 +134,8 @@ namespace MobileManagerTests
             mockRepository.Setup(mpr => mpr.Find(_reservationApplied1.Id)).Returns((ReservationApplied) null);
 
             var controller =
-                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger);
+                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger,
+                    _externalProcesses);
 
             // Act
             var result = controller.GetById(_reservationApplied1.Id);
@@ -149,7 +154,8 @@ namespace MobileManagerTests
             mockRepository.Setup(mpr => mpr.Add(_reservationApplied1));
 
             var controller =
-                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger);
+                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger,
+                    _externalProcesses);
 
             // Act
             var result = controller.Create(_reservationApplied1);
@@ -167,7 +173,8 @@ namespace MobileManagerTests
             mockRepository.Setup(mpr => mpr.Add((ReservationApplied) null));
 
             var controller =
-                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger);
+                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger,
+                    _externalProcesses);
 
             // Act
             var result = controller.Create(null);
@@ -188,7 +195,8 @@ namespace MobileManagerTests
             mockRepository.Setup(mpr => mpr.Add(reservationApplied));
 
             var controller =
-                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger);
+                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger,
+                    _externalProcesses);
 
             // Act
             var result = controller.Create(_reservationApplied1);
@@ -209,7 +217,8 @@ namespace MobileManagerTests
             mockRepository.Setup(mpr => mpr.Add(reservationApplied));
 
             var controller =
-                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger);
+                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger,
+                    _externalProcesses);
 
             // Act
             var result = controller.Create(_reservationApplied1);
@@ -241,7 +250,8 @@ namespace MobileManagerTests
                 .Returns(Task.FromResult(true));
 
             var controller = new ReservationsAppliedController(mockRepository.Object,
-                new RestClient(_config.Object, new HttpClient(mockHttp), Logger), mockAppiumService.Object, Logger);
+                new RestClient(_config.Object, new HttpClient(mockHttp), Logger), mockAppiumService.Object, Logger,
+                _externalProcesses);
 
             // Act
             var result = await controller.DeleteAsync(_reservationApplied1.Id);
@@ -268,7 +278,8 @@ namespace MobileManagerTests
                 .Respond("application/json", JsonConvert.SerializeObject(Device1));
 
             var controller = new ReservationsAppliedController(mockRepository.Object,
-                new RestClient(_config.Object, new HttpClient(mockHttp), Logger), _appiumService, Logger);
+                new RestClient(_config.Object, new HttpClient(mockHttp), Logger), _appiumService, Logger,
+                _externalProcesses);
 
             // Act
             var result = await controller.DeleteAsync(_reservationApplied1.Id);
@@ -287,7 +298,8 @@ namespace MobileManagerTests
             mockRepository.Setup(mpr => mpr.Find(_reservationApplied1.Id)).Returns((ReservationApplied) null);
 
             var controller =
-                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger);
+                new ReservationsAppliedController(mockRepository.Object, _restClient, _appiumService, Logger,
+                    _externalProcesses);
 
             // Act
             var result = await controller.DeleteAsync(_reservationApplied1.Id);

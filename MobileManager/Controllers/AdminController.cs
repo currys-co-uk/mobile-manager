@@ -57,18 +57,5 @@ namespace MobileManager.Controllers
 
             return JsonExtension(result);
         }
-
-        /// <summary>
-        /// Restarts the MobileManager. [NOT-WORKING]
-        /// </summary>
-        /// <returns>null</returns>
-        [HttpGet("restart")]
-        public IActionResult RestartManager()
-        {
-            LogRequestToDebug();
-
-            //Program.Shutdown();
-            return OkExtension();
-        }
     }
 }

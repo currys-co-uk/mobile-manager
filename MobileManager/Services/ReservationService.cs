@@ -30,15 +30,17 @@ namespace MobileManager.Services
         private Task _reservationService;
         private readonly DeviceUtils _deviceUtils;
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="T:MobileManager.Services.ReservationService"/> class.
         /// </summary>
-        public ReservationService(IManagerConfiguration configuration, IManagerLogger logger)
+        public ReservationService(IManagerConfiguration configuration, IManagerLogger logger, IExternalProcesses externalProcesses)
         {
             _logger = logger;
-            _deviceUtils = new DeviceUtils(_logger);
+            var externalProcesses1 = externalProcesses;
+            _deviceUtils = new DeviceUtils(_logger, externalProcesses1);
             RestClient = new RestClient(configuration, _logger);
-            _appiumService = new AppiumService(configuration, logger);
+            _appiumService = new AppiumService(configuration, logger, externalProcesses1);
         }
 
         /// <inheritdoc />
@@ -61,16 +63,6 @@ namespace MobileManager.Services
         public void Dispose()
         {
             _reservationService?.Dispose();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:MobileManager.Services.ReservationService"/> class.
-        /// </summary>
-        /// <param name="restClient">Rest client.</param>
-        // for unit tests mock
-        public ReservationService(RestClient restClient)
-        {
-            RestClient = restClient;
         }
 
         /// <inheritdoc />

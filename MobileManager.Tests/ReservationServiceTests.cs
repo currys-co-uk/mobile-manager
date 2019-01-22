@@ -6,6 +6,7 @@ using MobileManager.Http.Clients;
 using MobileManager.Logging.Logger;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Enums;
+using MobileManager.Services;
 using MobileManager.Services.Interfaces;
 using MobileManager.Utils;
 using Moq;
@@ -22,6 +23,8 @@ namespace MobileManagerTests
 
         private readonly Device _device2 =
             new DeviceFactory().NewDevice("222", "device_222", true, DeviceType.Android, DeviceStatus.Online);
+
+        private readonly IExternalProcesses _externalProcesses = new Mock<IExternalProcesses>().Object;
 
         private static readonly IManagerLogger Logger = new Mock<IManagerLogger>().Object;
         private readonly string _httpLocalhost;
@@ -58,7 +61,7 @@ namespace MobileManagerTests
                 .Returns(Task.FromResult(lockedDevice.AppiumEndpoint));
 
             // Act
-            var deviceUtils = new DeviceUtils(Logger);
+            var deviceUtils = new DeviceUtils(Logger, _externalProcesses);
             var restClient = new RestClient(_config.Object, new HttpClient(mockHttp), Logger);
             var result = await deviceUtils.LockDevice(_device1.Id, restClient, mockAppiumService.Object);
 
@@ -88,7 +91,7 @@ namespace MobileManagerTests
                 .Returns(Task.FromResult(true));
 
             // Act
-            var deviceUtils = new DeviceUtils(Logger);
+            var deviceUtils = new DeviceUtils(Logger, _externalProcesses);
             var restClient = new RestClient(_config.Object, new HttpClient(mockHttp), Logger);
             var result = await deviceUtils.UnlockDevice(_device1.Id, restClient, mockAppiumService.Object);
 
@@ -113,7 +116,7 @@ namespace MobileManagerTests
                 .Respond("application/json", JsonConvert.SerializeObject(_device1));
 
             // Act
-            var deviceUtils = new DeviceUtils(Logger);
+            var deviceUtils = new DeviceUtils(Logger, _externalProcesses);
             var restClient = new RestClient(_config.Object, new HttpClient(mockHttp), Logger);
             var result = await deviceUtils.FindMatchingDevice(requestedDevice, restClient);
 
@@ -137,7 +140,7 @@ namespace MobileManagerTests
                 JsonConvert.SerializeObject(new List<Device> {_device1, _device2}));
 
             // Act
-            var deviceUtils = new DeviceUtils(Logger);
+            var deviceUtils = new DeviceUtils(Logger, _externalProcesses);
             var restClient = new RestClient(_config.Object, new HttpClient(mockHttp), Logger);
             var result = await deviceUtils.FindMatchingDevice(requestedDevice, restClient);
 
@@ -161,7 +164,7 @@ namespace MobileManagerTests
                 JsonConvert.SerializeObject(new List<Device> {_device1, _device2}));
 
             // Act
-            var deviceUtils = new DeviceUtils(Logger);
+            var deviceUtils = new DeviceUtils(Logger, _externalProcesses);
             var restClient = new RestClient(_config.Object, new HttpClient(mockHttp), Logger);
             var result = await deviceUtils.FindMatchingDevice(requestedDevice, restClient);
 

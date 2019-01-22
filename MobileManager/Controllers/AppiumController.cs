@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MobileManager.Appium;
+using MobileManager.Appium.Interfaces;
 using MobileManager.Controllers.Interfaces;
 using MobileManager.Database.Repositories.Interfaces;
 using MobileManager.Http.Clients.Interfaces;
@@ -53,15 +54,16 @@ namespace MobileManager.Controllers
         {
             LogRequestToDebug();
 
-            if (appiumProcess == null)
+            if (!ValidateAppiumProcess(appiumProcess, out var badRequest))
             {
-                return BadRequestExtension("Empty AppiumProcess in request");
+                return badRequest;
             }
 
             if (_appiumRepository.Find(appiumProcess.DeviceId) != null)
             {
                 // 409 = Conflict
-                return StatusCodeExtension(409, "AppiumProcess DeviceId already stored in database.");
+                return StatusCodeExtension(409,
+                    $"Appium is already running for {nameof(AppiumProcess.DeviceId)} [{appiumProcess.DeviceId}].");
             }
 
             try
@@ -79,6 +81,7 @@ namespace MobileManager.Controllers
             return CreatedAtRoute("getAppiumProcess", new {id = appiumProcess.DeviceId}, appiumProcess);
         }
 
+
         /// <inheritdoc />
         /// <summary>
         /// Delete the specified appium process by id. [INTERNAL-ONLY]
@@ -92,6 +95,11 @@ namespace MobileManager.Controllers
         public IActionResult Delete(string id)
         {
             LogRequestToDebug();
+
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequestExtension($"Empty request.");
+            }
 
             var appiumProcess = _appiumRepository.Find(id);
             if (appiumProcess == null)
@@ -140,6 +148,11 @@ namespace MobileManager.Controllers
         {
             LogRequestToDebug();
 
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequestExtension($"Empty request.");
+            }
+
             var appiumProcess = _appiumRepository.Find(id);
             if (appiumProcess == null)
             {
@@ -148,5 +161,59 @@ namespace MobileManager.Controllers
 
             return JsonExtension(appiumProcess);
         }
+
+
+        #region privates
+
+        private bool ValidateAppiumProcess(IAppiumProcess appiumProcess, out IActionResult badResult)
+        {
+            badResult = null;
+
+            if (appiumProcess == null)
+            {
+                badResult = BadRequestExtension($"Empty {nameof(AppiumProcess)} in request.");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(appiumProcess.DeviceId))
+            {
+                badResult = BadRequestExtension($"Empty {nameof(appiumProcess.DeviceId)} in request.");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(appiumProcess.AppiumPort))
+            {
+                badResult = BadRequestExtension($"Empty {nameof(appiumProcess.AppiumPort)} in request.");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(appiumProcess.AppiumBootstrapPort))
+            {
+                badResult = BadRequestExtension($"Empty {nameof(appiumProcess.AppiumBootstrapPort)} in request.");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(appiumProcess.WdaLocalPort))
+            {
+                badResult = BadRequestExtension($"Empty {nameof(appiumProcess.WdaLocalPort)} in request.");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(appiumProcess.WebkitDebugProxyPort))
+            {
+                badResult = BadRequestExtension($"Empty {nameof(appiumProcess.WebkitDebugProxyPort)} in request.");
+                return false;
+            }
+
+            if (appiumProcess.AppiumPid == 0)
+            {
+                badResult = BadRequestExtension($"Invalid {nameof(appiumProcess.AppiumPid)} in request.");
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }

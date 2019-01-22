@@ -19,15 +19,19 @@ namespace MobileManager.Services
     public class ScreenshotService : ControllerExtensions, IScreenshotService
     {
         private readonly IManagerLogger _logger;
+        private readonly IExternalProcesses _externalProcesses;
+
 
         /// <inheritdoc />
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="logger">Logger</param>
-        public ScreenshotService(IManagerLogger logger) : base(logger)
+        /// <param name="externalProcesses"></param>
+        public ScreenshotService(IManagerLogger logger, IExternalProcesses externalProcesses) : base(logger)
         {
             _logger = logger;
+            _externalProcesses = externalProcesses;
         }
 
         /// <inheritdoc />
@@ -42,7 +46,7 @@ namespace MobileManager.Services
             Directory.CreateDirectory(screenshotFolder);
             var screenshotFilePath = Path.Combine(screenshotFolder, $"{device.Id}.tiff");
 
-            var screenshotRet = ExternalProcesses.RunProcessAndReadOutput("idevicescreenshot",
+            var screenshotRet = _externalProcesses.RunProcessAndReadOutput("idevicescreenshot",
                 $" -u {device.Id} {screenshotFilePath}", 10000);
             _logger.Debug(screenshotRet);
 
@@ -82,7 +86,7 @@ namespace MobileManager.Services
                 var screenshotFilePath = Path.Combine(screenshotFolder, $"{device.Id}.png");
 
                 // adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
-                var screenshotRet = ExternalProcesses.RunShellProcess("adb",
+                var screenshotRet = _externalProcesses.RunShellProcess("adb",
                     $" -s {device.Id} exec-out 'screencap -p' > {screenshotFilePath}; exit 0", 10000);
                 _logger.Debug(screenshotRet);
 

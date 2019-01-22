@@ -9,6 +9,7 @@ using MobileManager.Database.Repositories.Interfaces;
 using MobileManager.Http.Clients.Interfaces;
 using MobileManager.Logging.Logger;
 using MobileManager.Models.Reservations;
+using MobileManager.Services;
 using MobileManager.Services.Interfaces;
 using MobileManager.Utils;
 using Newtonsoft.Json;
@@ -28,6 +29,8 @@ namespace MobileManager.Controllers
         private readonly IAppiumService _appiumService;
         private readonly IManagerLogger _logger;
         private readonly DeviceUtils _deviceUtils;
+        private readonly IExternalProcesses _externalProcesses;
+
 
         /// <inheritdoc />
         /// <summary>
@@ -37,14 +40,16 @@ namespace MobileManager.Controllers
         /// <param name="restClient">Rest client.</param>
         /// <param name="appiumService">Appium service.</param>
         /// <param name="logger">Logger.</param>
+        /// <param name="externalProcesses"></param>
         public ReservationsAppliedController(IRepository<ReservationApplied> reservationsAppliedRepository,
-            IRestClient restClient, IAppiumService appiumService, IManagerLogger logger) : base(logger)
+            IRestClient restClient, IAppiumService appiumService, IManagerLogger logger, IExternalProcesses externalProcesses) : base(logger)
         {
             _reservationsAppliedRepository = reservationsAppliedRepository;
             _restClient = restClient;
             _appiumService = appiumService;
             _logger = logger;
-            _deviceUtils = new DeviceUtils(_logger);
+            _externalProcesses = externalProcesses;
+            _deviceUtils = new DeviceUtils(_logger, _externalProcesses);
         }
 
         /// <summary>

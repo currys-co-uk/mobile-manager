@@ -21,14 +21,18 @@ namespace MobileManager.Utils
     public class DeviceUtils : IDeviceUtils
     {
         private readonly IManagerLogger _logger;
+        private readonly IExternalProcesses _externalProcesses;
+
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="logger"></param>
-        public DeviceUtils(IManagerLogger logger)
+        /// <param name="externalProcesses"></param>
+        public DeviceUtils(IManagerLogger logger, IExternalProcesses externalProcesses)
         {
             _logger = logger;
+            _externalProcesses = externalProcesses;
         }
 
         /// <inheritdoc />
@@ -219,7 +223,8 @@ namespace MobileManager.Utils
                 case DeviceType.IOS:
                 {
                     deviceRestartOutput =
-                        ExternalProcesses.RunProcessAndReadOutput("idevicediagnostics", "-u " + device.Id + " restart");
+                        _externalProcesses.RunProcessAndReadOutput("idevicediagnostics",
+                            "-u " + device.Id + " restart");
 
                     if (string.Equals(deviceRestartOutput, "Restarting device.\n"))
                     {
@@ -231,7 +236,7 @@ namespace MobileManager.Utils
                 case DeviceType.Android:
                 {
                     deviceRestartOutput =
-                        ExternalProcesses.RunProcessAndReadOutput("adb", "-s " + device.Id + " reboot");
+                        _externalProcesses.RunProcessAndReadOutput("adb", "-s " + device.Id + " reboot");
 
                     //todo: check output for android
                     if (string.Equals(deviceRestartOutput, "Restarting device."))
