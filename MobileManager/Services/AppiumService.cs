@@ -185,6 +185,8 @@ namespace MobileManager.Services
                 throw new Exception($"{nameof(StartAppiumForDeviceId)}: Appium process failed to start successfully.");
             }
 
+            appiumPid = Convert.ToInt32(processId);
+
             var appiumProcess = new AppiumProcess(deviceId, appiumPort, appiumBootstrapPort, appiumPid,
                 webkitDebugProxyPort, wdaLocalPort);
 
