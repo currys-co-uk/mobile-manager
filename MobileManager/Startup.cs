@@ -124,7 +124,7 @@ namespace MobileManager
                 .AddSingleton<IAdbController, AdbController>()
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddSingleton(typeof(IManagerConfiguration), AppConfigurationProvider.Get<ManagerConfiguration>())
-                .AddSingleton<IManagerLogger, RepositoryLogger>()
+                .AddSingleton<IManagerLogger, ManagerLogger>()
                 .AddSingleton<IExternalProcesses, ExternalProcesses>();
 
             services.AddMvcCore().AddApiExplorer();
