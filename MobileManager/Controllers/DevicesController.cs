@@ -34,14 +34,8 @@ namespace MobileManager.Controllers
         private readonly IExternalProcesses _externalProcesses;
 
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:MobileManager.Controllers.DevicesController" /> class.
-        /// </summary>
-        /// <param name="devicesRepository">Devices repository.</param>
-        /// <param name="logger">Logger.</param>
-        /// <param name="configuration">Configuration</param>
-        /// <param name="externalProcesses"></param>
+        
+        /*
         public DevicesController(IRepository<Device> devicesRepository, IManagerLogger logger,
             IManagerConfiguration configuration, IExternalProcesses externalProcesses) : base(logger)
         {
@@ -64,6 +58,7 @@ namespace MobileManager.Controllers
             _externalProcesses = externalProcesses;
             _screenshotService = new ScreenshotService(_logger, _externalProcesses);
         }
+        */
 
         /// <inheritdoc />
         public DevicesController(IRepository<Device> devicesRepository, IManagerLogger logger,
@@ -73,8 +68,8 @@ namespace MobileManager.Controllers
             _devicesRepository = devicesRepository;
             _logger = logger;
             _configuration = configuration;
-            _deviceUtils = deviceUtils;
-            _screenshotService = screenshotService;
+            _deviceUtils = deviceUtils ?? new DeviceUtils(_logger, _externalProcesses);
+            _screenshotService = screenshotService ?? new ScreenshotService(_logger, _externalProcesses);
             _externalProcesses = externalProcesses;
         }
 
