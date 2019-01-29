@@ -28,6 +28,7 @@ using MobileManager.Models.Logger;
 using MobileManager.Models.Reservations;
 using MobileManager.Services;
 using MobileManager.Services.Interfaces;
+using MobileManager.Utils;
 using Newtonsoft.Json;
 using React.AspNet;
 using Swashbuckle.AspNetCore.Swagger;
@@ -125,7 +126,9 @@ namespace MobileManager
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddSingleton(typeof(IManagerConfiguration), AppConfigurationProvider.Get<ManagerConfiguration>())
                 .AddSingleton<IManagerLogger, ManagerLogger>()
+                .AddSingleton<IDeviceUtils, DeviceUtils>()
                 .AddSingleton<IExternalProcesses, ExternalProcesses>();
+                
 
             services.AddMvcCore().AddApiExplorer();
 
