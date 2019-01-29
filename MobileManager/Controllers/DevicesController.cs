@@ -38,34 +38,12 @@ namespace MobileManager.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="T:MobileManager.Controllers.DevicesController" /> class.
         /// </summary>
-        /// <param name="devicesRepository">Devices repository.</param>
-        /// <param name="logger">Logger.</param>
-        /// <param name="configuration">Configuration</param>
-        /// <param name="externalProcesses"></param>
-        public DevicesController(IRepository<Device> devicesRepository, IManagerLogger logger,
-            IManagerConfiguration configuration, IExternalProcesses externalProcesses) : base(logger)
-        {
-            _devicesRepository = devicesRepository;
-            _logger = logger;
-            _configuration = configuration;
-            _externalProcesses = externalProcesses;
-            _deviceUtils = new DeviceUtils(_logger, _externalProcesses);
-            _screenshotService = new ScreenshotService(_logger, _externalProcesses);
-        }
-
-        /// <inheritdoc />
-        public DevicesController(IRepository<Device> devicesRepository, IManagerLogger logger,
-            IManagerConfiguration configuration, IDeviceUtils deviceUtils, IExternalProcesses externalProcesses) : base(logger)
-        {
-            _devicesRepository = devicesRepository;
-            _logger = logger;
-            _configuration = configuration;
-            _deviceUtils = deviceUtils;
-            _externalProcesses = externalProcesses;
-            _screenshotService = new ScreenshotService(_logger, _externalProcesses);
-        }
-
-        /// <inheritdoc />
+        /// <param name="devicesRepository"><see cref="IRepository{T}"/> Device.</param>
+        /// <param name="logger"><see cref="IManagerLogger"/></param>
+        /// <param name="configuration"><see cref="IManagerConfiguration"/></param>
+        /// <param name="screenshotService"><see cref="IScreenshotService"/></param>
+        /// <param name="externalProcesses"><see cref="IExternalProcesses"/></param>
+        /// <param name="deviceUtils"><see cref="IDeviceUtils"/></param>
         public DevicesController(IRepository<Device> devicesRepository, IManagerLogger logger,
             IManagerConfiguration configuration, IDeviceUtils deviceUtils,
             IScreenshotService screenshotService, IExternalProcesses externalProcesses) : base(logger)
@@ -73,9 +51,9 @@ namespace MobileManager.Controllers
             _devicesRepository = devicesRepository;
             _logger = logger;
             _configuration = configuration;
-            _deviceUtils = deviceUtils;
-            _screenshotService = screenshotService;
-            _externalProcesses = externalProcesses;
+            _deviceUtils = deviceUtils ?? new DeviceUtils(_logger, _externalProcesses);
+            _screenshotService = screenshotService ?? new ScreenshotService(_logger, _externalProcesses);
+            _externalProcesses = externalProcesses ?? new ExternalProcesses(_logger);
         }
 
         /// <inheritdoc />

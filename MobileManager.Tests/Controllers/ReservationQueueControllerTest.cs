@@ -453,7 +453,7 @@ namespace MobileManagerTests.Controllers
         }
         
         [Fact]
-        public async void DeleteReservation_RemoveThorwsException_ErrorStatusCode()
+        public void DeleteReservation_RemoveThrowsException_ErrorStatusCode()
         {
             // Arrange
             var mockRepository = new Mock<IRepository<Reservation>>();
