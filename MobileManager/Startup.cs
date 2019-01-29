@@ -127,6 +127,7 @@ namespace MobileManager
                 .AddSingleton(typeof(IManagerConfiguration), AppConfigurationProvider.Get<ManagerConfiguration>())
                 .AddSingleton<IManagerLogger, ManagerLogger>()
                 .AddSingleton<IDeviceUtils, DeviceUtils>()
+                .AddSingleton<IScreenshotService, ScreenshotService>()
                 .AddSingleton<IExternalProcesses, ExternalProcesses>();
                 
 
