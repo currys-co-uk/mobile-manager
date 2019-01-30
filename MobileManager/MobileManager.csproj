@@ -96,6 +96,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="~\mobile-manager-git-repos\Sample iOS\Assets.xcassets\AppIcon.appiconset\Contents.json" />
+    <_ContentIncludedByDefault Remove="~\mobile-manager-git-repos\Sample iOS\Assets.xcassets\Contents.json" />
+    <_ContentIncludedByDefault Remove="~\mobile-manager-git-repos\Sample iOS\Assets.xcassets\first.imageset\Contents.json" />
+    <_ContentIncludedByDefault Remove="~\mobile-manager-git-repos\Sample iOS\Assets.xcassets\nav_local_testing.imageset\Contents.json" />
+    <_ContentIncludedByDefault Remove="~\mobile-manager-git-repos\Sample iOS\Assets.xcassets\nav_ui.imageset\Contents.json" />
+    <_ContentIncludedByDefault Remove="~\mobile-manager-git-repos\Sample iOS\Assets.xcassets\nav_webview.imageset\Contents.json" />
+    <_ContentIncludedByDefault Remove="~\mobile-manager-git-repos\Sample iOS\Assets.xcassets\second.imageset\Contents.json" />
+  </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

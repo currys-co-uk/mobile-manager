@@ -25,7 +25,7 @@ namespace MobileManager.Utils
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="externalProcesses"></param>

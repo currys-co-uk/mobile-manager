@@ -128,7 +128,7 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
-        
+
         [Fact]
         public void Delete_EmptyRequest_BadRequest()
         {
@@ -140,13 +140,13 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
-        
+
         [Fact]
         public void Delete_AppiumProcessNotInDatabase_NotFound()
         {
             var restClientMock = new Mock<IRestClient>();
             var appiumRepositoryMock = new Mock<IRepository<AppiumProcess>>();
-            
+
             var appiumProcess = new AppiumProcess("123", "1111", "1112", 1, "1113", "1114");
             appiumRepositoryMock.Setup(a => a.Find(It.IsAny<string>())).Returns((AppiumProcess) null);
 
@@ -162,7 +162,7 @@ namespace MobileManagerTests.Controllers
         {
             var restClientMock = new Mock<IRestClient>();
             var appiumRepositoryMock = new Mock<IRepository<AppiumProcess>>();
-            
+
             var appiumProcess = new AppiumProcess("123", "1111", "1112", 1, "1113", "1114");
             appiumRepositoryMock.Setup(a => a.Find(It.IsAny<string>())).Returns(appiumProcess);
             appiumRepositoryMock.Setup(a => a.Remove(It.IsAny<string>())).Throws(new Exception());
@@ -175,13 +175,13 @@ namespace MobileManagerTests.Controllers
             var viewResult = Assert.IsType<ObjectResult>(result);
             Assert.Equal(500, viewResult.StatusCode);
         }
-        
+
         [Fact]
         public void Delete_ValidScenario_Ok()
         {
             var restClientMock = new Mock<IRestClient>();
             var appiumRepositoryMock = new Mock<IRepository<AppiumProcess>>();
-            
+
             var appiumProcess = new AppiumProcess("123", "1111", "1112", 1, "1113", "1114");
             appiumRepositoryMock.Setup(a => a.Find(It.IsAny<string>())).Returns(appiumProcess);
 
@@ -191,12 +191,12 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<OkResult>(result);
         }
-        
+
         #endregion
 
 
         #region GetAll Tests
-        
+
         [Fact]
         public void GetAll_ValidScenario_ListOfAppiumProcesses()
         {
@@ -206,15 +206,15 @@ namespace MobileManagerTests.Controllers
 
             var appiumProcess1 = new AppiumProcess("123", "1111", "1112", 1, "1113", "1114");
             var appiumProcess2 = new AppiumProcess("123", "1111", "1112", 1, "1113", "1114");
-            
+
             var appiumProcesses = new List<AppiumProcess>
             {
                 appiumProcess1,
                 appiumProcess2
             };
-            
+
             appiumRepositoryMock.Setup(a => a.GetAll()).Returns(appiumProcesses);
-            
+
             var result = appiumController.GetAll();
 
             var viewResult = Assert.IsType<List<AppiumProcess>>(result);
@@ -222,7 +222,7 @@ namespace MobileManagerTests.Controllers
             Assert.Contains(appiumProcess1, viewResult);
             Assert.Contains(appiumProcess2, viewResult);
         }
-        
+
         [Fact]
         public void GetAll_NoAppiumProcesses_EmptyResult()
         {
@@ -230,18 +230,18 @@ namespace MobileManagerTests.Controllers
             var appiumRepositoryMock = new Mock<IRepository<AppiumProcess>>();
             var appiumController = new AppiumController(restClientMock.Object, appiumRepositoryMock.Object, Logger);
 
-            
+
             appiumRepositoryMock.Setup(a => a.GetAll()).Returns(new List<AppiumProcess>());
-            
+
             var result = appiumController.GetAll();
 
             var viewResult = Assert.IsType<List<AppiumProcess>>(result);
             Assert.Empty(viewResult);
         }
-        
+
 
         #endregion
-        
+
         #region GetById Tests
 
         [Fact]
@@ -255,7 +255,7 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
-        
+
         [Fact]
         public void GetById_EmptyRequest_BadRequest()
         {
@@ -273,7 +273,7 @@ namespace MobileManagerTests.Controllers
         {
             var restClientMock = new Mock<IRestClient>();
             var appiumRepositoryMock = new Mock<IRepository<AppiumProcess>>();
-            
+
             var appiumProcess = new AppiumProcess("123", "1111", "1112", 1, "1113", "1114");
             appiumRepositoryMock.Setup(a => a.Find(It.IsAny<string>())).Returns((AppiumProcess) null);
 
@@ -283,13 +283,13 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<NotFoundObjectResult>(result);
         }
-        
+
         [Fact]
         public void GetById_ValidScenario_Ok()
         {
             var restClientMock = new Mock<IRestClient>();
             var appiumRepositoryMock = new Mock<IRepository<AppiumProcess>>();
-            
+
             var appiumProcess = new AppiumProcess("123", "1111", "1112", 1, "1113", "1114");
             appiumRepositoryMock.Setup(a => a.Find(It.IsAny<string>())).Returns(appiumProcess);
 
@@ -300,7 +300,7 @@ namespace MobileManagerTests.Controllers
             var viewResult = Assert.IsType<JsonResult>(result);
             Assert.Equal(appiumProcess, viewResult.Value);
         }
-        
+
         #endregion
     }
 }

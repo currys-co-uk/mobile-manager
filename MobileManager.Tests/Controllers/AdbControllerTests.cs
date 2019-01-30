@@ -42,7 +42,7 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
-        
+
         [Fact]
         public void ShellAdbCommand_NullRequest_BadRequest()
         {
@@ -65,7 +65,7 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
-        
+
         [Fact]
         public void ShellAdbCommand_NullDeviceIdAndCommand_BadRequest()
         {
@@ -87,7 +87,7 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
-        
+
         [Fact]
         public void ShellAdbCommand_NullDeviceIdRequest_BadRequest()
         {
@@ -109,7 +109,7 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
-        
+
         [Fact]
         public void ShellAdbCommand_NullCommandRequest_BadRequest()
         {
@@ -134,7 +134,7 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
-        
+
         [Fact]
         public void ShellAdbCommand_NonExistentDeviceId_BadRequest()
         {
@@ -163,7 +163,7 @@ namespace MobileManagerTests.Controllers
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
-        
+
         [Fact]
         public void ShellAdbCommand_NotAndroidDeviceType_BadRequest()
         {
@@ -202,7 +202,7 @@ namespace MobileManagerTests.Controllers
             Assert.Equal(200, viewResult.StatusCode);
             Assert.Equal(output, viewResult.Value);
         }
-        
+
         [Fact]
         public void ShellAdbCommand_ValidRequest_CorrectOutput()
         {
@@ -248,7 +248,7 @@ namespace MobileManagerTests.Controllers
             var viewResult = Assert.IsType<ObjectResult>(result);
             Assert.Equal(500, viewResult.StatusCode);
         }
-        
+
         [Fact]
         public void ShellAdbCommand_ValidRequestExternalProcessThrowsException_ErrorResponse()
         {

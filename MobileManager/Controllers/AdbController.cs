@@ -101,7 +101,7 @@ namespace MobileManager.Controllers
         private bool IsAdbCommandExecutable(IAdbCommand adbCommand, out IActionResult actionResult)
         {
             actionResult = null;
-            
+
             LogRequestToDebug();
 
             if (adbCommand?.AndroidDeviceId == null || adbCommand.Command == null)
