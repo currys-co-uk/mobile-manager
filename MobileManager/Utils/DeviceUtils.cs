@@ -12,24 +12,30 @@ using MobileManager.Services;
 using MobileManager.Services.Interfaces;
 using Newtonsoft.Json;
 
-namespace MobileManager
+namespace MobileManager.Utils
 {
+    /// <inheritdoc />
     /// <summary>
     /// Device utils.
     /// </summary>
-    public class DeviceUtils
+    public class DeviceUtils : IDeviceUtils
     {
         private readonly IManagerLogger _logger;
+        private readonly IExternalProcesses _externalProcesses;
+
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="logger"></param>
-        public DeviceUtils(IManagerLogger logger)
+        /// <param name="externalProcesses"></param>
+        public DeviceUtils(IManagerLogger logger, IExternalProcesses externalProcesses)
         {
             _logger = logger;
+            _externalProcesses = externalProcesses;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Locks the device.
         /// </summary>
@@ -49,7 +55,8 @@ namespace MobileManager
                 throw new KeyNotFoundException("Failed to find device with id: " + deviceId);
             }
 
-            _logger.Debug($"{nameof(LockDevice)}: set device id [{deviceId}] available from [{device.Available}] to false.");
+            _logger.Debug(
+                $"{nameof(LockDevice)}: set device id [{deviceId}] available from [{device.Available}] to false.");
             device.Available = false;
 
             _logger.Debug($"{nameof(LockDevice)}: device id [{deviceId}] stop running Appium");
@@ -74,6 +81,7 @@ namespace MobileManager
             return updatedDevice;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Unlocks the device.
         /// </summary>
@@ -93,7 +101,8 @@ namespace MobileManager
                 throw new KeyNotFoundException("Failed to find device with id: " + deviceId);
             }
 
-            _logger.Debug($"{nameof(UnlockDevice)}: set device id [{deviceId}] available from [{device.Available}] to true.");
+            _logger.Debug(
+                $"{nameof(UnlockDevice)}: set device id [{deviceId}] available from [{device.Available}] to true.");
             device.Available = true;
 
             _logger.Debug($"{nameof(UnlockDevice)}: device id [{deviceId}] stop running Appium");
@@ -104,7 +113,8 @@ namespace MobileManager
 
             device.AppiumEndpoint = "";
 
-            _logger.Debug($"{nameof(UnlockDevice)}: device id [{deviceId}] set status from [{device.Status}] to OFFLINE");
+            _logger.Debug(
+                $"{nameof(UnlockDevice)}: device id [{deviceId}] set status from [{device.Status}] to OFFLINE");
             device.Status = DeviceStatus.Offline;
 
             var updatedDevice = await restClient.UpdateDevice(device);
@@ -113,6 +123,7 @@ namespace MobileManager
             return updatedDevice;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Finds the matching device.
         /// </summary>
@@ -192,11 +203,12 @@ namespace MobileManager
         /// </summary>
         /// <returns>The random device.</returns>
         /// <param name="devices">Devices.</param>
-        private Device SelectRandomDevice(IEnumerable<Device> devices)
+        private static Device SelectRandomDevice(IEnumerable<Device> devices)
         {
             return devices.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Restarts the device.
         /// </summary>
@@ -211,7 +223,8 @@ namespace MobileManager
                 case DeviceType.IOS:
                 {
                     deviceRestartOutput =
-                        ExternalProcesses.RunProcessAndReadOutput("idevicediagnostics", "-u " + device.Id + " restart");
+                        _externalProcesses.RunProcessAndReadOutput("idevicediagnostics",
+                            "-u " + device.Id + " restart");
 
                     if (string.Equals(deviceRestartOutput, "Restarting device.\n"))
                     {
@@ -222,7 +235,8 @@ namespace MobileManager
                 }
                 case DeviceType.Android:
                 {
-                    deviceRestartOutput = ExternalProcesses.RunProcessAndReadOutput("adb", "-s " + device.Id + " reboot");
+                    deviceRestartOutput =
+                        _externalProcesses.RunProcessAndReadOutput("adb", "-s " + device.Id + " reboot");
 
                     //todo: check output for android
                     if (string.Equals(deviceRestartOutput, "Restarting device."))
@@ -247,19 +261,20 @@ namespace MobileManager
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private string WildCardToRegular(string value)
+        private static string WildCardToRegular(string value)
         {
             return $@"^{Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*")}$";
         }
 
 
+        /// <inheritdoc />
         /// <summary>
         /// Checks status of connected device ids with stored devices in database - changes status accordingly.
         /// </summary>
         /// <param name="checkedDeviceIds">Ids of devices which are currently connected.</param>
         /// <param name="deviceType">Type of devices for which we have ids.</param>
-        /// <param name="restClient"><see cref="IRestClient"/>.</param>
-        /// <returns><see cref="Task"/>.</returns>
+        /// <param name="restClient"><see cref="T:MobileManager.Http.Clients.Interfaces.IRestClient" />.</param>
+        /// <returns><see cref="T:System.Threading.Tasks.Task" />.</returns>
         public async Task CheckAllDevicesInDevicePoolAreOnline(IReadOnlyCollection<string> checkedDeviceIds,
             DeviceType deviceType, IRestClient restClient)
         {

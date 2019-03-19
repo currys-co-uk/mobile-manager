@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using MobileManager.Configuration;
 using MobileManager.Configuration.ConfigurationProvider;
 using MobileManager.Configuration.Enums;
@@ -27,7 +28,7 @@ namespace MobileManager.Database.Extensions
                 case DbProviders.Sqlite:
                     return services.AddEntityFrameworkSqlite();
                 default:
-                    throw new System.InvalidOperationException("Unknown DB provider setup in database configuration.");
+                    throw new InvalidOperationException("Unknown DB provider setup in database configuration.");
             }
         }
     }

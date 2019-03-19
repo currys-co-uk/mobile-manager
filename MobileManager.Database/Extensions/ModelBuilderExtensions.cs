@@ -19,12 +19,14 @@ namespace MobileManager.Database.Extensions
         /// <typeparam name="T">DB Model</typeparam>
         /// <param name="builder">Model builder</param>
         /// <returns>Returns model builder</returns>
-        public static ModelBuilder GetModelMapping<T>(this ModelBuilder builder) where T: class 
+        public static ModelBuilder GetModelMapping<T>(this ModelBuilder builder) where T : class
         {
             var dbConfiguration = AppConfigurationProvider.Get<DbConfiguration>();
             var mappingFileName = $"{typeof(T).Name}.json";
 
-            var mappingObject = JsonConvert.DeserializeObject<ClassDbMapping>(File.ReadAllText(dbConfiguration.DbMappingFilesPath + "/" + mappingFileName));
+            var mappingObject =
+                JsonConvert.DeserializeObject<ClassDbMapping>(
+                    File.ReadAllText(dbConfiguration.DbMappingFilesPath + "/" + mappingFileName));
 
             builder.HasDefaultSchema(dbConfiguration.DefaultDbSchema);
             builder.Entity<T>().ToTable(mappingObject.TableNames[dbConfiguration.DbProvider]);
@@ -32,8 +34,8 @@ namespace MobileManager.Database.Extensions
             foreach (var propertyMapping in mappingObject.PropertyMappings)
             {
                 builder.Entity<T>()
-                       .Property(propertyMapping.PropertyName)
-                       .HasColumnName(propertyMapping.Mappings[dbConfiguration.DbProvider]);
+                    .Property(propertyMapping.PropertyName)
+                    .HasColumnName(propertyMapping.Mappings[dbConfiguration.DbProvider]);
             }
 
             return builder;

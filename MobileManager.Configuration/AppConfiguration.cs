@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 namespace MobileManager.Configuration
 {
+    /// <inheritdoc />
     /// <summary>
     /// Application configuration
     /// </summary>
@@ -24,7 +25,8 @@ namespace MobileManager.Configuration
 
         public IConfiguration Load(string configPath)
         {
-            return (AppConfiguration)JsonConvert.DeserializeObject(File.ReadAllText(configPath), typeof(AppConfiguration));
+            return (AppConfiguration) JsonConvert.DeserializeObject(File.ReadAllText(configPath),
+                typeof(AppConfiguration));
         }
 
         public IConfiguration Clone()

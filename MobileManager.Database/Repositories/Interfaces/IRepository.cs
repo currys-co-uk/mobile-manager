@@ -14,7 +14,7 @@ namespace MobileManager.Database.Repositories.Interfaces
         /// <returns>The add.</returns>
         /// <param name="entity">Entity.</param>
         void Add(T entity);
-        
+
         /// <summary>
         /// Add range of entities.
         /// </summary>

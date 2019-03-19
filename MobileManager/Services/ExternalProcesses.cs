@@ -10,18 +10,21 @@ namespace MobileManager.Services
     /// <summary>
     /// External processes.
     /// </summary>
-    public static class ExternalProcesses
+    public class ExternalProcesses : IExternalProcesses
     {
-        private static INotificationSystem NotificationSystem { get; }
+        private static INotificationSystem NotificationSystem { get; set; }
 
-        private static IBridgeSystem BridgeSystem { get; }
+        private static IBridgeSystem BridgeSystem { get; set; }
 
-        private static ShellConfigurator Shell { get; }
+        private static ShellConfigurator Shell { get; set; }
 
-        private static readonly ManagerLogger ManagerLogger = new ManagerLogger();
+        private readonly IManagerLogger _logger;
 
-        static ExternalProcesses()
+        /// <param name="logger"></param>
+        /// <inheritdoc />
+        public ExternalProcesses(IManagerLogger logger)
         {
+            _logger = logger;
             NotificationSystem = ToolBox.Notification.NotificationSystem.Default;
             switch (OS.GetCurrent())
             {
@@ -46,9 +49,9 @@ namespace MobileManager.Services
         /// <param name="processName">Process name.</param>
         /// <param name="processArgs">Process arguments.</param>
         /// <param name="timeout">Timeout.</param>
-        public static string RunProcessAndReadOutput(string processName, string processArgs, int timeout = 5000)
+        public string RunProcessAndReadOutput(string processName, string processArgs, int timeout = 5000)
         {
-            ManagerLogger.Debug(string.Format("RunProcessAndReadOutput processName: [{0}] args: [{1}]", processName,
+            _logger.Debug(string.Format("RunProcessAndReadOutput processName: [{0}] args: [{1}]", processName,
                 processArgs));
 
             var psi = new ProcessStartInfo()
@@ -69,10 +72,10 @@ namespace MobileManager.Services
             proc.WaitForExit(timeout);
 
             var output = proc.StandardOutput.ReadToEnd();
-            ManagerLogger.Debug(string.Format("RunProcessAndReadOutput output: [{0}]", string.Join("\n", output)));
+            _logger.Debug(string.Format("RunProcessAndReadOutput output: [{0}]", string.Join("\n", output)));
 
             var errorOutput = proc.StandardError.ReadToEnd();
-            ManagerLogger.Debug(string.Format("RunProcessAndReadOutput errorOutput: [{0}]",
+            _logger.Debug(string.Format("RunProcessAndReadOutput errorOutput: [{0}]",
                 string.Join("\n", errorOutput)));
 
             return output + errorOutput;
@@ -85,9 +88,9 @@ namespace MobileManager.Services
         /// <param name="processName">Process name.</param>
         /// <param name="processArgs">Process arguments.</param>
         /// <param name="timeout">Timeout.</param>
-        public static string RunShellProcess(string processName, string processArgs, int timeout = 5000)
+        public string RunShellProcess(string processName, string processArgs, int timeout = 5000)
         {
-            ManagerLogger.Debug(string.Format("RunProcessAndReadOutput processName: [{0}] args: [{1}]", processName,
+            _logger.Debug(string.Format("RunProcessAndReadOutput processName: [{0}] args: [{1}]", processName,
                 processArgs));
 
             var psi = new ProcessStartInfo()
@@ -115,7 +118,7 @@ namespace MobileManager.Services
         /// <returns>The process in background.</returns>
         /// <param name="processName">Process name.</param>
         /// <param name="processArgs">Process arguments.</param>
-        public static int RunProcessInBackground(string processName, string processArgs)
+        public int RunProcessInBackground(string processName, string processArgs)
         {
             var proc = $"{processName} {processArgs}";
             var response = Shell.Term(proc, Output.External);
@@ -124,11 +127,11 @@ namespace MobileManager.Services
         }
 
         /// <summary>
-        /// Ises the process in background running.
+        /// Starts the process in background running.
         /// </summary>
-        /// <returns><c>true</c>, if process in background running was ised, <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c>, if process in background running was started, <c>false</c> otherwise.</returns>
         /// <param name="processId">Process identifier.</param>
-        public static bool IsProcessInBackgroundRunning(int processId)
+        public bool IsProcessInBackgroundRunning(int processId)
         {
             return !Process.GetProcessById(processId).HasExited;
         }
@@ -137,10 +140,10 @@ namespace MobileManager.Services
         /// Stops the process running in background.
         /// </summary>
         /// <param name="containsStringInName">Contains string in name.</param>
-        public static void StopProcessRunningInBackground(string containsStringInName)
+        public void StopProcessRunningInBackground(string containsStringInName)
         {
             var result = RunProcessAndReadOutput("/bin/bash", $"close.sh {containsStringInName}");
-            ManagerLogger.Debug($"StopProcessRunningInBackground output: [{result}]");
+            _logger.Debug($"StopProcessRunningInBackground output: [{result}]");
         }
     }
 }

@@ -20,6 +20,7 @@ namespace MobileManager.Controllers
     {
         private readonly IRestClient _restClient;
         private readonly IManagerLogger _logger;
+        private readonly IExternalProcesses _externalProcesses;
 
         /// <inheritdoc />
         /// <summary>
@@ -27,10 +28,12 @@ namespace MobileManager.Controllers
         /// </summary>
         /// <param name="restClient">Rest client.</param>
         /// <param name="logger">Logger</param>
-        public AdbController(IRestClient restClient, IManagerLogger logger) : base(logger)
+        /// <param name="externalProcesses"></param>
+        public AdbController(IRestClient restClient, IManagerLogger logger, IExternalProcesses externalProcesses) : base(logger)
         {
             _restClient = restClient;
             _logger = logger;
+            _externalProcesses = externalProcesses;
         }
 
         /// <inheritdoc />
@@ -47,30 +50,12 @@ namespace MobileManager.Controllers
         [HttpPost("command")]
         public IActionResult Command([FromBody] AdbCommand adbCommand)
         {
-            LogRequestToDebug();
-
-            if (adbCommand?.AndroidDeviceId == null || adbCommand.Command == null)
-            {
-                return BadRequestExtension("Empty AdbCommand in request");
-            }
-
-            var device = _restClient.GetDevice(adbCommand.AndroidDeviceId).Result;
-            if (device == null)
-            {
-                return BadRequestExtension(
-                    $"Device with DeviceId [{adbCommand.AndroidDeviceId}] not found in device pool.");
-            }
-
-            if (device.Type != DeviceType.Android)
-            {
-                return BadRequestExtension(
-                    $"Device found by ID is not an Android. [{device}]");
-            }
+            if (!IsAdbCommandExecutable(adbCommand, out var actionResult)) return actionResult;
 
             string output;
             try
             {
-                output = ExternalProcesses.RunProcessAndReadOutput("adb",
+                output = _externalProcesses.RunProcessAndReadOutput("adb",
                     $"-s {adbCommand.AndroidDeviceId} {adbCommand.Command}");
                 _logger.Debug($"{nameof(AdbCommand)} [{adbCommand.Command}] output: [{output}]");
             }
@@ -94,32 +79,14 @@ namespace MobileManager.Controllers
         /// <response code="200">Command executed successfully.</response>
         /// <response code="500">Failed to run adb command.</response>
         [HttpPost("shellCommand")]
-        public IActionResult ShellCommand([FromBody] AdbCommand adbCommand)
+        public IActionResult ShellAdbCommand([FromBody] AdbCommand adbCommand)
         {
-            LogRequestToDebug();
-
-            if (adbCommand?.AndroidDeviceId == null || adbCommand.Command == null)
-            {
-                return BadRequestExtension("Empty AdbCommand in request");
-            }
-
-            var device = _restClient.GetDevice(adbCommand.AndroidDeviceId).Result;
-            if (device == null)
-            {
-                return BadRequestExtension(
-                    $"Device with DeviceId [{adbCommand.AndroidDeviceId}] not found in device pool.");
-            }
-
-            if (device.Type != DeviceType.Android)
-            {
-                return BadRequestExtension(
-                    $"Device found by ID is not an Android. [{device}]");
-            }
+            if (!IsAdbCommandExecutable(adbCommand, out var actionResult)) return actionResult;
 
             string output;
             try
             {
-                output = ExternalProcesses.RunProcessAndReadOutput("adb",
+                output = _externalProcesses.RunProcessAndReadOutput("adb",
                     $"-s {adbCommand.AndroidDeviceId} shell {adbCommand.Command}");
                 _logger.Debug($"{nameof(AdbCommand)} shell [{adbCommand.Command}] output: [{output}]");
             }
@@ -129,6 +96,42 @@ namespace MobileManager.Controllers
             }
 
             return StatusCodeExtension(200, output);
+        }
+
+        private bool IsAdbCommandExecutable(IAdbCommand adbCommand, out IActionResult actionResult)
+        {
+            actionResult = null;
+
+            LogRequestToDebug();
+
+            if (adbCommand?.AndroidDeviceId == null || adbCommand.Command == null)
+            {
+                {
+                    actionResult = BadRequestExtension("Empty AdbCommand in request");
+                    return false;
+                }
+            }
+
+            var device = _restClient.GetDevice(adbCommand.AndroidDeviceId).Result;
+            if (device == null)
+            {
+                {
+                    actionResult = BadRequestExtension(
+                        $"Device with DeviceId [{adbCommand.AndroidDeviceId}] not found in device pool.");
+                    return false;
+                }
+            }
+
+            if (device.Type != DeviceType.Android)
+            {
+                {
+                    actionResult = BadRequestExtension(
+                        $"Device found by ID is not an Android. [{device}]");
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

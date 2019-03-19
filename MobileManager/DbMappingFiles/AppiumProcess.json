@@ -1,57 +1,57 @@
 ﻿{
-  "TableNames": {
-    "MsSql": "AppiumProcess",
-    "Sqlite": "AppiumProcess",
-    "PostgreSql": "appium_process"
-  },
-  "PropertyMappings": [
-    {
-      "PropertyName": "DeviceId",
-      "Mappings": {
-        "MsSql": "DeviceId",
-        "Sqlite": "DeviceId",
-        "PostgreSql": "device_id"
-      }
+    "TableNames": {
+        "MsSql": "AppiumProcess",
+        "Sqlite": "AppiumProcess",
+        "PostgreSql": "appium_process"
     },
-    {
-      "PropertyName": "AppiumPort",
-      "Mappings": {
-        "MsSql": "AppiumPort",
-        "Sqlite": "AppiumPort",
-        "PostgreSql": "appium_port"
-      }
-    },
-    {
-      "PropertyName": "AppiumBootstrapPort",
-      "Mappings": {
-        "MsSql": "AppiumBootstrapPort",
-        "Sqlite": "AppiumBootstrapPort",
-        "PostgreSql": "appium_bootstrap_port"
-      }
-    },
-    {
-      "PropertyName": "AppiumPid",
-      "Mappings": {
-        "MsSql": "AppiumPid",
-        "Sqlite": "AppiumPid",
-        "PostgreSql": "appium_pid"
-      }
-    },
-    {
-      "PropertyName": "WebkitDebugProxyPort",
-      "Mappings": {
-        "MsSql": "WebkitDebugProxyPort",
-        "Sqlite": "WebkitDebugProxyPort",
-        "PostgreSql": "webkit_debug_proxy_port"
-      }
-    },
-    {
-      "PropertyName": "WdaLocalPort",
-      "Mappings": {
-        "MsSql": "WdaLocalPort",
-        "Sqlite": "WdaLocalPort",
-        "PostgreSql": "wda_local_port"
-      }
-    }
-  ]
+    "PropertyMappings": [
+        {
+            "PropertyName": "DeviceId",
+            "Mappings": {
+                "MsSql": "DeviceId",
+                "Sqlite": "DeviceId",
+                "PostgreSql": "device_id"
+            }
+        },
+        {
+            "PropertyName": "AppiumPort",
+            "Mappings": {
+                "MsSql": "AppiumPort",
+                "Sqlite": "AppiumPort",
+                "PostgreSql": "appium_port"
+            }
+        },
+        {
+            "PropertyName": "AppiumBootstrapPort",
+            "Mappings": {
+                "MsSql": "AppiumBootstrapPort",
+                "Sqlite": "AppiumBootstrapPort",
+                "PostgreSql": "appium_bootstrap_port"
+            }
+        },
+        {
+            "PropertyName": "AppiumPid",
+            "Mappings": {
+                "MsSql": "AppiumPid",
+                "Sqlite": "AppiumPid",
+                "PostgreSql": "appium_pid"
+            }
+        },
+        {
+            "PropertyName": "WebkitDebugProxyPort",
+            "Mappings": {
+                "MsSql": "WebkitDebugProxyPort",
+                "Sqlite": "WebkitDebugProxyPort",
+                "PostgreSql": "webkit_debug_proxy_port"
+            }
+        },
+        {
+            "PropertyName": "WdaLocalPort",
+            "Mappings": {
+                "MsSql": "WdaLocalPort",
+                "Sqlite": "WdaLocalPort",
+                "PostgreSql": "wda_local_port"
+            }
+        }
+    ]
 }

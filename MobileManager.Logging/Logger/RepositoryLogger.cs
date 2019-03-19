@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 
 namespace MobileManager.Logging.Logger
 {
+    /// <inheritdoc cref="IManagerLogger" />
     /// <summary>
     /// Logs messages to repository.
     /// </summary>
@@ -35,7 +36,7 @@ namespace MobileManager.Logging.Logger
             _logger = new ManagerLogger();
             _logMessageStore = new List<LogMessage>();
             _cancellationTokenSource = new CancellationTokenSource();
-            
+
             StartAsync(_cancellationTokenSource.Token);
         }
 
@@ -158,7 +159,9 @@ namespace MobileManager.Logging.Logger
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _repositoryLoggerService = Task.Factory.StartNew(async () => { await StoreMessagesToRepository(cancellationToken); }, cancellationToken);
+            _repositoryLoggerService =
+                Task.Factory.StartNew(async () => { await StoreMessagesToRepository(cancellationToken); },
+                    cancellationToken);
             return _repositoryLoggerService;
         }
 

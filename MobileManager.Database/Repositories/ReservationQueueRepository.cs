@@ -6,12 +6,13 @@ using MobileManager.Models.Reservations;
 
 namespace MobileManager.Database.Repositories
 {
+    /// <inheritdoc />
     /// <summary>
     /// Reservation queue repository.
     /// </summary>
     public class ReservationQueueRepository : IRepository<Reservation>
     {
-        readonly GeneralDbContext _context;
+        private readonly GeneralDbContext _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:MobileManager.Database.Repositories.ReservationQueueRepository"/> class.
@@ -22,6 +23,7 @@ namespace MobileManager.Database.Repositories
             _context = context;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Add the specified reservation.
         /// </summary>
@@ -41,6 +43,7 @@ namespace MobileManager.Database.Repositories
             _context.SaveChanges();
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Find the specified id.
         /// </summary>
@@ -48,14 +51,13 @@ namespace MobileManager.Database.Repositories
         /// <param name="id">Identifier.</param>
         public Reservation Find(string id)
         {
-            Reservation reservationQueued;
-
-            reservationQueued = _context.Reservations.Include(r => r.RequestedDevices)
+            var reservationQueued = _context.Reservations.Include(r => r.RequestedDevices)
                 .FirstOrDefault(r => r.Id == id);
 
             return reservationQueued;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets all.
         /// </summary>
@@ -68,6 +70,7 @@ namespace MobileManager.Database.Repositories
             return reservationsList.ToList();
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Remove the specified id.
         /// </summary>
@@ -88,6 +91,7 @@ namespace MobileManager.Database.Repositories
         }
 
 
+        /// <inheritdoc />
         /// <summary>
         /// Update the specified reservationUpdated.
         /// </summary>

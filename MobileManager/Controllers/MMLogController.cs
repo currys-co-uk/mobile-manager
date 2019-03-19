@@ -8,6 +8,7 @@ using MobileManager.Models.Logger;
 
 namespace MobileManager.Controllers
 {
+    /// <inheritdoc cref="IMmLogController" />
     /// <summary>
     /// MM log controller.
     /// </summary>
@@ -29,7 +30,7 @@ namespace MobileManager.Controllers
             _repository = repository;
             _logger = logger;
         }
-        
+
         /// <summary>
         /// Gets last number of lines from MM log
         /// </summary>

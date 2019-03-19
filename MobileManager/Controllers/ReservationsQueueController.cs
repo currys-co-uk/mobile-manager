@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
 using MobileManager.Controllers.Interfaces;
 using MobileManager.Database.Repositories.Interfaces;
 using MobileManager.Http.Clients.Interfaces;
 using MobileManager.Logging.Logger;
 using MobileManager.Models.Reservations;
+using MobileManager.Services;
+using MobileManager.Utils;
+using Newtonsoft.Json;
+
 #pragma warning disable 1998
 
 namespace MobileManager.Controllers
 {
+    /// <inheritdoc cref="IReservationQueueController" />
     /// <summary>
     /// Reservations queue controller.
     /// </summary>
@@ -25,20 +29,25 @@ namespace MobileManager.Controllers
         private readonly IRestClient _restClient;
         private readonly IManagerLogger _logger;
         private readonly DeviceUtils _deviceUtils;
+        private readonly IExternalProcesses _externalProcesses;
 
+
+        /// <inheritdoc />
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:MobileManager.Controllers.ReservationsQueueController"/> class.
+        /// Initializes a new instance of the <see cref="T:MobileManager.Controllers.ReservationsQueueController" /> class.
         /// </summary>
         /// <param name="reservationsQueueRepository">Reservations queue repository.</param>
         /// <param name="restClient">Rest client.</param>
         /// <param name="logger">Logger.</param>
+        /// <param name="externalProcesses"></param>
         public ReservationsQueueController(IRepository<Reservation> reservationsQueueRepository,
-            IRestClient restClient, IManagerLogger logger) : base(logger)
+            IRestClient restClient, IManagerLogger logger, IExternalProcesses externalProcesses) : base(logger)
         {
             _reservationsQueueRepository = reservationsQueueRepository;
             _restClient = restClient;
             _logger = logger;
-            _deviceUtils = new DeviceUtils(_logger);
+            _externalProcesses = externalProcesses;
+            _deviceUtils = new DeviceUtils(_logger, _externalProcesses);
         }
 
         /// <summary>
@@ -51,10 +60,12 @@ namespace MobileManager.Controllers
             LogRequestToDebug();
 
             var reservations = _reservationsQueueRepository.GetAll();
-            _logger.Debug(string.Format("GetAll reservations queued: [{0}]", JsonConvert.SerializeObject(reservations)));
+            _logger.Debug(string.Format("GetAll reservations queued: [{0}]",
+                JsonConvert.SerializeObject(reservations)));
             return reservations;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets the Reservation by identifier.
         /// </summary>
@@ -163,6 +174,7 @@ namespace MobileManager.Controllers
         }
 
 
+        /// <inheritdoc />
         /// <summary>
         /// Delete the specified reservation by id.
         /// </summary>
@@ -238,7 +250,5 @@ namespace MobileManager.Controllers
 
             return CreatedAtRoute("getQueueReservation", new {id = reservationUpdated.Id}, reservationUpdated);
         }
-        
-        
     }
 }

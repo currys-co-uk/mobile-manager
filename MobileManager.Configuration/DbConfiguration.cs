@@ -6,23 +6,20 @@ using Newtonsoft.Json;
 
 namespace MobileManager.Configuration
 {
-    public class DbConfiguration: IConfiguration
+    public class DbConfiguration : IConfiguration
     {
-        [JsonProperty]
-        public string DefaultDbSchema { get; private set; }
+        [JsonProperty] public string DefaultDbSchema { get; private set; }
 
-        [JsonProperty]
-        public DbProviders DbProvider { get; private set; }
+        [JsonProperty] public DbProviders DbProvider { get; private set; }
 
-        [JsonProperty]
-        public Dictionary<DbProviders, string> ConnectionStrings { get; private set; }
+        [JsonProperty] public Dictionary<DbProviders, string> ConnectionStrings { get; private set; }
 
-        [JsonProperty]
-        public string DbMappingFilesPath { get; private set; }
+        [JsonProperty] public string DbMappingFilesPath { get; private set; }
 
         public IConfiguration Load(string configPath)
         {
-            return (DbConfiguration)JsonConvert.DeserializeObject(File.ReadAllText(configPath), typeof(DbConfiguration));
+            return (DbConfiguration) JsonConvert.DeserializeObject(File.ReadAllText(configPath),
+                typeof(DbConfiguration));
         }
 
         public IConfiguration Clone()

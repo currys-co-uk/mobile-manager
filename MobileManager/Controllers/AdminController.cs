@@ -18,8 +18,9 @@ namespace MobileManager.Controllers
         private readonly IRestClient _restClient;
         private readonly IManagerLogger _logger;
 
+        /// <inheritdoc />
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:MobileManager.Controllers.AdminController"/> class.
+        /// Initializes a new instance of the <see cref="T:MobileManager.Controllers.AdminController" /> class.
         /// </summary>
         /// <param name="restClient">Rest client.</param>
         /// <param name="logger">Logger</param>
@@ -55,19 +56,6 @@ namespace MobileManager.Controllers
             };
 
             return JsonExtension(result);
-        }
-
-        /// <summary>
-        /// Restarts the MobileManager. [NOT-WORKING]
-        /// </summary>
-        /// <returns>null</returns>
-        [HttpGet("restart")]
-        public IActionResult RestartManager()
-        {
-            LogRequestToDebug();
-
-            //Program.Shutdown();
-            return OkExtension();
         }
     }
 }

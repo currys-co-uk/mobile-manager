@@ -26,7 +26,7 @@ namespace MobileManager.Database.Extensions
                     return builder.UseSqlServer(connectionString);
                 case DbProviders.PostgreSql:
                     return builder.UseNpgsql(connectionString
-                        );
+                    );
                 case DbProviders.Sqlite:
                     return builder.UseSqlite(connectionString);
                 default:

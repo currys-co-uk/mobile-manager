@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 namespace MobileManager.Models.Reservations
 {
+    /// <inheritdoc />
     /// <summary>
     /// Reservation.
     /// </summary>
@@ -20,12 +21,14 @@ namespace MobileManager.Models.Reservations
             DateCreated = DateTime.Now;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
         /// <value>The identifier.</value>
         public string Id { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the date created.
         /// </summary>
@@ -39,13 +42,15 @@ namespace MobileManager.Models.Reservations
         //[ForeignKey("ReservationRefId")]
         public List<RequestedDevices> RequestedDevices { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="T:MobileManager.Models.Reservations.Reservation"/> is available. Only used internally in <see cref="T:MobileManager.Services.ReservationService"/>.
+        /// Gets or sets a value indicating whether this <see cref="T:MobileManager.Models.Reservations.Reservation" /> is available. Only used internally in <see cref="T:MobileManager.Services.ReservationService" />.
         /// </summary>
         /// <value><c>true</c> if available; otherwise, <c>false</c>.</value>
         [JsonIgnore]
-        public Boolean Available { get; set; }
+        public bool Available { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the failed to apply counter.
         /// </summary>

@@ -21,7 +21,7 @@ namespace MobileManager.Models.Logger
         public LogLevel LogLevel { get; set; }
 
         public string Message { get; set; }
-        
+
         public string MethodName { get; set; }
 
         public string Exception { get; set; }

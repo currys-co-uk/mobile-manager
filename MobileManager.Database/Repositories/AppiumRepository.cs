@@ -6,6 +6,7 @@ using MobileManager.Database.Repositories.Interfaces;
 
 namespace MobileManager.Database.Repositories
 {
+    /// <inheritdoc />
     /// <summary>
     /// Appium repository.
     /// </summary>
@@ -22,6 +23,7 @@ namespace MobileManager.Database.Repositories
             _context = context;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets all.
         /// </summary>
@@ -39,6 +41,7 @@ namespace MobileManager.Database.Repositories
             return appiumProcesses;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Add the specified appiumProcess.
         /// </summary>
@@ -54,7 +57,7 @@ namespace MobileManager.Database.Repositories
                 scope.Complete();
             }
         }
-        
+
         /// <inheritdoc />
         public void Add(IEnumerable<AppiumProcess> entities)
         {
@@ -68,6 +71,7 @@ namespace MobileManager.Database.Repositories
         }
 
 
+        /// <inheritdoc />
         /// <summary>
         /// Find the specified deviceId.
         /// </summary>
@@ -87,6 +91,7 @@ namespace MobileManager.Database.Repositories
             return appiumProcess;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Updates stored Appium Process instance
         /// </summary>
@@ -104,6 +109,7 @@ namespace MobileManager.Database.Repositories
             }
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Remove the specified deviceId.
         /// </summary>

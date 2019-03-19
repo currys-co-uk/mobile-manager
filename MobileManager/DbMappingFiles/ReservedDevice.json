@@ -1,41 +1,41 @@
 ﻿{
-  "TableNames": {
-    "MsSql": "ReservedDevice",
-    "Sqlite": "ReservedDevice",
-    "PostgreSql": "reserved_device"
-  },
-  "PropertyMappings": [
-    {
-      "PropertyName": "Id",
-      "Mappings": {
-        "MsSql": "Id",
-        "Sqlite": "Id",
-        "PostgreSql": "id"
-      }
+    "TableNames": {
+        "MsSql": "ReservedDevice",
+        "Sqlite": "ReservedDevice",
+        "PostgreSql": "reserved_device"
     },
-    {
-      "PropertyName": "ReservationAppliedId",
-      "Mappings": {
-        "MsSql": "ReservationAppliedId",
-        "Sqlite": "ReservationAppliedId",
-        "PostgreSql": "reservation_applied_id"
-      }
-    },
-    {
-      "PropertyName": "DeviceId",
-      "Mappings": {
-        "MsSql": "DeviceId",
-        "Sqlite": "DeviceId",
-        "PostgreSql": "device_id"
-      }
-    },
-    {
-      "PropertyName": "AppiumEndpoint",
-      "Mappings": {
-        "MsSql": "AppiumEndpoint",
-        "Sqlite": "AppiumEndpoint",
-        "PostgreSql": "appium_endpoint"
-      }
-    }
-  ]
+    "PropertyMappings": [
+        {
+            "PropertyName": "Id",
+            "Mappings": {
+                "MsSql": "Id",
+                "Sqlite": "Id",
+                "PostgreSql": "id"
+            }
+        },
+        {
+            "PropertyName": "ReservationAppliedId",
+            "Mappings": {
+                "MsSql": "ReservationAppliedId",
+                "Sqlite": "ReservationAppliedId",
+                "PostgreSql": "reservation_applied_id"
+            }
+        },
+        {
+            "PropertyName": "DeviceId",
+            "Mappings": {
+                "MsSql": "DeviceId",
+                "Sqlite": "DeviceId",
+                "PostgreSql": "device_id"
+            }
+        },
+        {
+            "PropertyName": "AppiumEndpoint",
+            "Mappings": {
+                "MsSql": "AppiumEndpoint",
+                "Sqlite": "AppiumEndpoint",
+                "PostgreSql": "appium_endpoint"
+            }
+        }
+    ]
 }

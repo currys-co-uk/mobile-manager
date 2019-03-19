@@ -6,12 +6,13 @@ using MobileManager.Models.Reservations;
 
 namespace MobileManager.Database.Repositories
 {
+    /// <inheritdoc />
     /// <summary>
     /// Reservation applied repository.
     /// </summary>
     public class ReservationAppliedRepository : IRepository<ReservationApplied>
     {
-        readonly GeneralDbContext _context;
+        private readonly GeneralDbContext _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:MobileManager.Database.Repositories.ReservationAppliedRepository"/> class.
@@ -22,6 +23,7 @@ namespace MobileManager.Database.Repositories
             _context = context;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Add the specified reservationApplied.
         /// </summary>
@@ -41,6 +43,7 @@ namespace MobileManager.Database.Repositories
             _context.SaveChanges();
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Find the specified id.
         /// </summary>
@@ -54,6 +57,7 @@ namespace MobileManager.Database.Repositories
             return reservationApplied;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Updates Applied reservation
         /// </summary>
@@ -64,6 +68,7 @@ namespace MobileManager.Database.Repositories
             _context.SaveChanges();
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets all.
         /// </summary>
@@ -76,6 +81,7 @@ namespace MobileManager.Database.Repositories
             return reservationAppliedList;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Remove the specified id.
         /// </summary>

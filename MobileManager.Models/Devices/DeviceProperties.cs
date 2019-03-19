@@ -12,7 +12,7 @@ namespace MobileManager.Models.Devices
         internal DeviceProperties()
         {
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="T:MobileManager.Models.Devices.DeviceProperties"/> class.
         /// </summary>
@@ -23,7 +23,7 @@ namespace MobileManager.Models.Devices
             Key = key;
             Value = value;
         }
-        
+
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>

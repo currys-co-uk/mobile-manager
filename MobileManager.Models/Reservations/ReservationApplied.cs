@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 namespace MobileManager.Models.Reservations
 {
+    /// <inheritdoc />
     /// <summary>
     /// Reservation applied.
     /// </summary>
@@ -25,18 +26,20 @@ namespace MobileManager.Models.Reservations
         /// Initializes a new instance of the <see cref="T:MobileManager.Models.Reservations.ReservationApplied"/> class.
         /// </summary>
         /// <param name="id">Identifier.</param>
-        public ReservationApplied(String id)
+        public ReservationApplied(string id)
         {
             Id = id;
             DateCreated = DateTime.Now;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
         /// <value>The identifier.</value>
         public string Id { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the date created.
         /// </summary>
@@ -51,12 +54,14 @@ namespace MobileManager.Models.Reservations
         //[ForeignKey("ReservationAppliedRefId")]
         public List<ReservedDevice> ReservedDevices { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="T:MobileManager.Models.Reservations.ReservationApplied"/> is available.
+        /// Gets or sets a value indicating whether this <see cref="T:MobileManager.Models.Reservations.ReservationApplied" /> is available.
         /// </summary>
         /// <value><c>true</c> if available; otherwise, <c>false</c>.</value>
-        public Boolean Available { get; set; }
+        public bool Available { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the failed to apply counter.
         /// </summary>

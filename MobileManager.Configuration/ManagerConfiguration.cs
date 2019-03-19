@@ -1,18 +1,21 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
 using MobileManager.Configuration.Interfaces;
 using Newtonsoft.Json;
 
 namespace MobileManager.Configuration
 {
+    /// <inheritdoc cref="IManagerConfiguration"/>
     /// <summary>
     /// Manager configuration.
     /// </summary>
     public class ManagerConfiguration : IManagerConfiguration, IConfiguration
     {
         private string _localIpAddress;
+
         public string LocalIpAddress
         {
             get
@@ -26,7 +29,7 @@ namespace MobileManager.Configuration
             }
             private set => _localIpAddress = value;
         }
-        
+
         /// <inheritdoc />
         [JsonProperty]
         public string ListeningIpAddress { get; private set; }
@@ -66,7 +69,7 @@ namespace MobileManager.Configuration
         /// <inheritdoc />
         [JsonProperty]
         public string IdeviceSyslogFolderPath { get; private set; }
-        
+
         /// <inheritdoc />
         [JsonProperty]
         public string IosDeveloperCertificateTeamId { get; private set; }
@@ -91,7 +94,7 @@ namespace MobileManager.Configuration
         /// <inheritdoc />
         [JsonProperty]
         public bool AndroidServiceEnabled { get; private set; }
-        
+
         /// <inheritdoc />
         [JsonProperty]
         public bool IosServiceEnabled { get; private set; }
@@ -99,16 +102,16 @@ namespace MobileManager.Configuration
         private string GetLocalIp()
         {
             var ipv4Address = string.Empty;
-            
+
             foreach (var currentIpAddress in Dns.GetHostAddresses(Dns.GetHostName()))
             {
                 if (currentIpAddress.ToString().StartsWith("169"))
                 {
                     continue;
                 }
-                
+
                 if (currentIpAddress.AddressFamily.ToString() ==
-                    System.Net.Sockets.AddressFamily.InterNetwork.ToString())
+                    AddressFamily.InterNetwork.ToString())
                 {
                     ipv4Address = currentIpAddress.ToString();
                     break;
@@ -120,7 +123,8 @@ namespace MobileManager.Configuration
 
         public IConfiguration Load(string configPath)
         {
-            return (ManagerConfiguration)JsonConvert.DeserializeObject(File.ReadAllText(configPath), typeof(ManagerConfiguration));
+            return (ManagerConfiguration) JsonConvert.DeserializeObject(File.ReadAllText(configPath),
+                typeof(ManagerConfiguration));
         }
 
         public IConfiguration Clone()

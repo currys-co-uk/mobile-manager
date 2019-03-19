@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using MobileManager.Controllers.Interfaces;
 using MobileManager.Database.Repositories.Interfaces;
 using MobileManager.Http.Clients.Interfaces;
 using MobileManager.Logging.Logger;
 using MobileManager.Models.Reservations;
+using MobileManager.Services;
 using MobileManager.Services.Interfaces;
+using MobileManager.Utils;
 using Newtonsoft.Json;
 
 namespace MobileManager.Controllers
 {
+    /// <inheritdoc cref="IReservationsAppliedController" />
     /// <summary>
     /// Reservations applied controller.
     /// </summary>
@@ -26,22 +29,27 @@ namespace MobileManager.Controllers
         private readonly IAppiumService _appiumService;
         private readonly IManagerLogger _logger;
         private readonly DeviceUtils _deviceUtils;
+        private readonly IExternalProcesses _externalProcesses;
 
+
+        /// <inheritdoc />
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:MobileManager.Controllers.ReservationsAppliedController"/> class.
+        /// Initializes a new instance of the <see cref="T:MobileManager.Controllers.ReservationsAppliedController" /> class.
         /// </summary>
         /// <param name="reservationsAppliedRepository">Reservations applied repository.</param>
         /// <param name="restClient">Rest client.</param>
         /// <param name="appiumService">Appium service.</param>
         /// <param name="logger">Logger.</param>
+        /// <param name="externalProcesses"></param>
         public ReservationsAppliedController(IRepository<ReservationApplied> reservationsAppliedRepository,
-            IRestClient restClient, IAppiumService appiumService, IManagerLogger logger) : base(logger)
+            IRestClient restClient, IAppiumService appiumService, IManagerLogger logger, IExternalProcesses externalProcesses) : base(logger)
         {
             _reservationsAppliedRepository = reservationsAppliedRepository;
             _restClient = restClient;
             _appiumService = appiumService;
             _logger = logger;
-            _deviceUtils = new DeviceUtils(_logger);
+            _externalProcesses = externalProcesses;
+            _deviceUtils = new DeviceUtils(_logger, _externalProcesses);
         }
 
         /// <summary>
@@ -59,6 +67,7 @@ namespace MobileManager.Controllers
             return reservations;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets the reservationApplied by identifier.
         /// </summary>
@@ -79,10 +88,11 @@ namespace MobileManager.Controllers
             return JsonExtension(reservationFromApplied);
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Creates the specified reservation. [INTERNAL-ONLY]
         /// </summary>
-        /// <returns>Created resservationApplied.</returns>
+        /// <returns>Created reservationApplied.</returns>
         /// <param name="reservation">ReservationApplied.</param>
         /// <response code="200">ReservationApplied created successfully.</response>
         /// <response code="400">Invalid reservationApplied in request</response>
@@ -117,6 +127,7 @@ namespace MobileManager.Controllers
             return CreatedAtRoute("getAppliedReservation", new {id = reservation.Id}, reservation);
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Deletes the ReservationApplied.
         /// </summary>
@@ -167,7 +178,7 @@ namespace MobileManager.Controllers
                 return StatusCodeExtension(500, "Failed to Remove reservation from database. " + ex.Message);
             }
 
-            return OkExtension(String.Format("Reservation queued successfully deleted: [{0}]",
+            return OkExtension(string.Format("Reservation queued successfully deleted: [{0}]",
                 JsonConvert.SerializeObject(reservationFromApplied)));
         }
     }

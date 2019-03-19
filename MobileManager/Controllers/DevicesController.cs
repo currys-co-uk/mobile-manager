@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using MobileManager.Configuration.Interfaces;
 using MobileManager.Controllers.Interfaces;
 using MobileManager.Database.Repositories.Interfaces;
@@ -14,6 +13,8 @@ using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Enums;
 using MobileManager.Models.Devices.Interfaces;
 using MobileManager.Services;
+using MobileManager.Utils;
+using Newtonsoft.Json;
 
 namespace MobileManager.Controllers
 {
@@ -28,22 +29,31 @@ namespace MobileManager.Controllers
         private readonly IRepository<Device> _devicesRepository;
         private readonly IManagerLogger _logger;
         private readonly IManagerConfiguration _configuration;
-        private readonly ScreenshotService _screenshotService;
-        private readonly DeviceUtils _deviceUtils;
+        private readonly IScreenshotService _screenshotService;
+        private readonly IDeviceUtils _deviceUtils;
+        private readonly IExternalProcesses _externalProcesses;
 
+
+        /// <inheritdoc />
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:MobileManager.Controllers.DevicesController"/> class.
+        /// Initializes a new instance of the <see cref="T:MobileManager.Controllers.DevicesController" /> class.
         /// </summary>
-        /// <param name="devicesRepository">Devices repository.</param>
-        /// <param name="logger">Logger.</param>
-        /// <param name="configuration">Configuration</param>
-        public DevicesController(IRepository<Device> devicesRepository, IManagerLogger logger, IManagerConfiguration configuration) : base(logger)
+        /// <param name="devicesRepository"><see cref="IRepository{T}"/> Device.</param>
+        /// <param name="logger"><see cref="IManagerLogger"/></param>
+        /// <param name="configuration"><see cref="IManagerConfiguration"/></param>
+        /// <param name="screenshotService"><see cref="IScreenshotService"/></param>
+        /// <param name="externalProcesses"><see cref="IExternalProcesses"/></param>
+        /// <param name="deviceUtils"><see cref="IDeviceUtils"/></param>
+        public DevicesController(IRepository<Device> devicesRepository, IManagerLogger logger,
+            IManagerConfiguration configuration, IDeviceUtils deviceUtils,
+            IScreenshotService screenshotService, IExternalProcesses externalProcesses) : base(logger)
         {
             _devicesRepository = devicesRepository;
             _logger = logger;
             _configuration = configuration;
-            _deviceUtils = new DeviceUtils(_logger);
-            _screenshotService = new ScreenshotService(_logger);
+            _deviceUtils = deviceUtils ?? new DeviceUtils(_logger, _externalProcesses);
+            _screenshotService = screenshotService ?? new ScreenshotService(_logger, _externalProcesses);
+            _externalProcesses = externalProcesses ?? new ExternalProcesses(_logger);
         }
 
         /// <inheritdoc />
@@ -103,7 +113,7 @@ namespace MobileManager.Controllers
 
             return JsonExtension(device.Properties);
         }
-        
+
         /// <summary>
         /// Gets device properties keys.
         /// </summary>
@@ -114,17 +124,18 @@ namespace MobileManager.Controllers
         {
             LogRequestToDebug();
 
-            var properties = _devicesRepository.GetAll().Select(d => d.Properties).ToList();
+            var devices = _devicesRepository.GetAll();
+            var properties = new List<DeviceProperties>();
 
-            var keys = new List<string>();
-            foreach (var property in properties)
+            foreach (var device in devices)
             {
-                keys.AddRange(property.Select(p => p.Key).Distinct().ToList());
+                properties.AddRange(device.Properties);
             }
+
+            var keys = properties.Select(p => p.Key).Distinct();
 
             return JsonExtension(keys);
         }
-
 
         /// <summary>
         /// Gets device properties the by identifier.
@@ -222,7 +233,7 @@ namespace MobileManager.Controllers
                 return StatusCodeExtension(409, "Device ID already stored in database.");
             }
 
-            if (String.IsNullOrEmpty(device.Id) || String.IsNullOrEmpty(device.Name))
+            if (string.IsNullOrEmpty(device.Id) || string.IsNullOrEmpty(device.Name))
             {
                 return BadRequestExtension("Device Id and Name has to be specified.");
             }
@@ -313,7 +324,7 @@ namespace MobileManager.Controllers
                 return NotFoundExtension("Device not found in database.");
             }
 
-            if (device.Status == DeviceStatus.Locked || device.Status == DeviceStatus.LockedOffline )
+            if (device.Status == DeviceStatus.Locked || device.Status == DeviceStatus.LockedOffline)
             {
                 return StatusCodeExtension(423, "Device is locked.");
             }
@@ -355,13 +366,21 @@ namespace MobileManager.Controllers
 
             if (!string.IsNullOrEmpty(restartOutput))
             {
-                return StatusCodeExtension(500, "Failed to restart device. " + restartOutput);
+                return StatusCodeExtension(500, $"Failed to restart device. [{restartOutput}]");
             }
 
             return OkExtension("RestartDevice successful.");
         }
 
-        private readonly List<string> _screenshotLocked = new List<string>();
+        /// <summary>
+        /// Contains ids of devices currently downloading screenshots from devices.
+        /// </summary>
+        public readonly List<string> ScreenshotLocked = new List<string>();
+
+        /// <summary>
+        /// Time to wait for screenshotLock to get free - in ms.
+        /// </summary>
+        public int ScreenshotLockedTimeout = 20000;
 
         /// <summary>
         /// Gets device screenshot the by identifier.
@@ -395,19 +414,18 @@ namespace MobileManager.Controllers
                 }
             }
 
-            var i = 0;
-            while (_screenshotLocked.Contains(device.Id))
+            var start = DateTime.Now;
+            while (ScreenshotLocked.Contains(device.Id))
             {
-                if (i > 200)
+                if (start + TimeSpan.FromMilliseconds(ScreenshotLockedTimeout) <= DateTime.Now)
                 {
                     throw new TimeoutException($"Too many requests for screenshots on device {device.Id}.");
                 }
 
-                i++;
                 Thread.Sleep(100);
             }
 
-            _screenshotLocked.Add(device.Id);
+            ScreenshotLocked.Add(device.Id);
 
             try
             {
@@ -429,7 +447,7 @@ namespace MobileManager.Controllers
             }
             finally
             {
-                _screenshotLocked.Remove(device.Id);
+                ScreenshotLocked.Remove(device.Id);
             }
         }
     }

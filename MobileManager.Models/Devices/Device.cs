@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MobileManager.Models.Devices.Enums;
@@ -9,6 +8,7 @@ using Newtonsoft.Json.Converters;
 
 namespace MobileManager.Models.Devices
 {
+    /// <inheritdoc />
     /// <summary>
     /// Device.
     /// </summary>
@@ -29,7 +29,7 @@ namespace MobileManager.Models.Devices
         /// <param name="available">If set to <c>true</c> available.</param>
         /// <param name="type">Type.</param>
         /// <param name="status">Status.</param>
-        public Device(String id, String name, Boolean available, DeviceType type, DeviceStatus status)
+        public Device(string id, string name, bool available, DeviceType type, DeviceStatus status)
         {
             Id = id;
             Name = name;
@@ -38,6 +38,7 @@ namespace MobileManager.Models.Devices
             Status = status;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
@@ -45,18 +46,21 @@ namespace MobileManager.Models.Devices
         [Key]
         public string Id { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         /// <value>The name.</value>
         public string Name { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="T:MobileManager.Devices.Device"/> is available.
+        /// Gets or sets a value indicating whether this <see cref="T:MobileManager.Devices.Device" /> is available.
         /// </summary>
         /// <value><c>true</c> if available; otherwise, <c>false</c>.</value>
         public bool Available { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the type.
         /// </summary>
@@ -64,6 +68,7 @@ namespace MobileManager.Models.Devices
         [JsonConverter(typeof(StringEnumConverter))]
         public DeviceType Type { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the status.
         /// </summary>
@@ -71,17 +76,19 @@ namespace MobileManager.Models.Devices
         [JsonConverter(typeof(StringEnumConverter))]
         public DeviceStatus Status { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the appium endpoint.
         /// </summary>
         /// <value>The appium endpoint.</value>
-        public String AppiumEndpoint { get; set; } = "";
+        public string AppiumEndpoint { get; set; } = "";
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the devices properties.
         /// </summary>
         /// <value>The requested devices.</value>
-        [Required]  //<======= Forces Cascade delete
+        [Required] //<======= Forces Cascade delete
         [ForeignKey("DeviceRefId")]
         public List<DeviceProperties> Properties { get; set; }
 

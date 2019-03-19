@@ -37,7 +37,7 @@ namespace MobileManager.Logging.Logger
         /// <param name="callerName"></param>
         /// <param name="fileName"></param>
         /// <param name="lineNumber"></param>
-        public void Info(string message, 
+        public void Info(string message,
             [CallerMemberName] string callerName = "",
             [CallerFilePath] string fileName = "",
             [CallerLineNumber] int lineNumber = 0)
@@ -53,7 +53,7 @@ namespace MobileManager.Logging.Logger
         /// <param name="callerName"></param>
         /// <param name="fileName"></param>
         /// <param name="lineNumber"></param>
-        public void Error(string message, 
+        public void Error(string message,
             [CallerMemberName] string callerName = "",
             [CallerFilePath] string fileName = "",
             [CallerLineNumber] int lineNumber = 0)
@@ -70,7 +70,7 @@ namespace MobileManager.Logging.Logger
         /// <param name="callerName"></param>
         /// <param name="fileName"></param>
         /// <param name="lineNumber"></param>
-        public void Error(string message, Exception e, 
+        public void Error(string message, Exception e,
             [CallerMemberName] string callerName = "",
             [CallerFilePath] string fileName = "",
             [CallerLineNumber] int lineNumber = 0)
@@ -87,7 +87,7 @@ namespace MobileManager.Logging.Logger
         /// <param name="callerName"></param>
         /// <param name="fileName"></param>
         /// <param name="lineNumber"></param>
-        public void Debug(string message, 
+        public void Debug(string message,
             [CallerMemberName] string callerName = "",
             [CallerFilePath] string fileName = "",
             [CallerLineNumber] int lineNumber = 0)

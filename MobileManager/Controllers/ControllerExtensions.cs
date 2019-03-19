@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 
 namespace MobileManager.Controllers
 {
+    /// <inheritdoc />
     /// <summary>
     /// Controller extensions.
     /// </summary>
@@ -24,7 +25,7 @@ namespace MobileManager.Controllers
         }
 
         /// <summary>
-        /// Bads the request extension.
+        /// Sends bad request extension.
         /// </summary>
         /// <returns>The request extension.</returns>
         /// <param name="error">Error.</param>
@@ -51,7 +52,7 @@ namespace MobileManager.Controllers
         }
 
         /// <summary>
-        /// Jsons the extension.
+        /// Send json extension.
         /// </summary>
         /// <returns>The extension.</returns>
         /// <param name="data">Data.</param>
@@ -63,7 +64,7 @@ namespace MobileManager.Controllers
         }
 
         /// <summary>
-        /// Oks the extension.
+        /// Send the ok extension.
         /// </summary>
         /// <returns>The extension.</returns>
         /// <param name="message">Message.</param>
@@ -87,7 +88,7 @@ namespace MobileManager.Controllers
         }
 
         /// <summary>
-        /// Nots the found extension.
+        /// Sends not found extension.
         /// </summary>
         /// <returns>The found extension.</returns>
         /// <param name="data">Data.</param>
@@ -130,7 +131,5 @@ namespace MobileManager.Controllers
             return
                 $"Protocol: {request.Protocol}, Method: {request.Method}, Url: {baseUrl}, Headers: {sbHeaders}, Body: {body}";
         }
-        
-        
     }
 }
