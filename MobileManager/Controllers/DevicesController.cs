@@ -173,7 +173,7 @@ namespace MobileManager.Controllers
             var config = new StringBuilder();
             config.AppendLine($"[mobile-manager-{device.Id}]");
             config.AppendLine(device.AppiumEndpoint != string.Empty ? $"url = {device.AppiumEndpoint}" : $"url = ");
-            config.AppendLine($"browserName = safari_mobile");
+            config.AppendLine($"browserName = safari mobile");
             config.AppendLine($"platformName = iOS");
             config.AppendLine($"udid = {device.Id}");
             config.AppendLine($"deviceName = \"{device.Name}\"");
@@ -183,10 +183,8 @@ namespace MobileManager.Controllers
             config.AppendLine($"signingId = \"iPhone Developer\"");
             config.AppendLine($"showXcodeLog: true");
             config.AppendLine($"realDeviceLogger = /usr/local/lib/node_modules/deviceconsole/deviceconsole");
-            config.AppendLine(
-                $"bootstrapPath = /usr/local/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent");
-            config.AppendLine(
-                $"agentPath = /usr/local/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent/WebDriverAgent.xcodeproj");
+            config.AppendLine($"bootstrapPath = /usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent");
+            config.AppendLine($"agentPath = /usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj");
             config.AppendLine("sessionTimeout = 6000");
             config.AppendLine($"startIWDP: true");
 
@@ -198,11 +196,12 @@ namespace MobileManager.Controllers
             var config = new StringBuilder();
             config.AppendLine($"[mobile-manager-{device.Id}]");
             config.AppendLine(device.AppiumEndpoint != string.Empty ? $"url = {device.AppiumEndpoint}" : $"url = ");
-            config.AppendLine($"browserName = chrome_mobile");
+            config.AppendLine($"browserName = chrome mobile");
             config.AppendLine($"platformName = android");
             config.AppendLine($"udid = {device.Id}");
             config.AppendLine($"deviceName = \"{device.Name}\" ");
             config.AppendLine($"sessionTimeout = 6000");
+            config.AppendLine($"automationName = UiAutomator2");
 
             return config.ToString();
         }
