@@ -105,7 +105,13 @@ namespace MobileManager.Configuration
 
             foreach (var currentIpAddress in Dns.GetHostAddresses(Dns.GetHostName()))
             {
+
                 if (currentIpAddress.ToString().StartsWith("169"))
+                {
+                    continue;
+                }
+
+                if (currentIpAddress.ToString().StartsWith("127"))
                 {
                     continue;
                 }
