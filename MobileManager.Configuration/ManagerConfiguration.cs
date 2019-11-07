@@ -105,12 +105,13 @@ namespace MobileManager.Configuration
 
             foreach (var currentIpAddress in Dns.GetHostAddresses(Dns.GetHostName()))
             {
-
+                // not set IP address by DHCP (probably no connection on interface)
                 if (currentIpAddress.ToString().StartsWith("169"))
                 {
                     continue;
                 }
 
+                // loopback for localhost 
                 if (currentIpAddress.ToString().StartsWith("127"))
                 {
                     continue;
