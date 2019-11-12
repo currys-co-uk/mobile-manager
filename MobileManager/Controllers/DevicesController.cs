@@ -14,7 +14,10 @@ using MobileManager.Models.Devices.Enums;
 using MobileManager.Models.Devices.Interfaces;
 using MobileManager.Services;
 using MobileManager.Utils;
+using MobileManager.SeleniumConfigs.DataSets;
 using Newtonsoft.Json;
+using DotLiquid;
+using DotLiquid.FileSystems;
 
 namespace MobileManager.Controllers
 {
@@ -162,7 +165,7 @@ namespace MobileManager.Controllers
                 case DeviceType.Android:
                     return JsonExtension(CreateAndroidSeleniumConfig(device));
                 case DeviceType.Unspecified:
-                    return JsonExtension("Unsupported device type");
+                    return JsonExtension(CreateIosSeleniumConfig(device));
                 default:
                     return JsonExtension("Unsupported device type");
             }
@@ -170,6 +173,13 @@ namespace MobileManager.Controllers
 
         private string CreateIosSeleniumConfig(IDevice device)
         {
+            string readText = System.IO.File.ReadAllText(@"SeleniumConfigTemplates/XTestIOS.tt");
+            Template template = Template.Parse(readText); 
+
+            IosSeleniumConfig data = new IosSeleniumConfig(device, _configuration);
+            return template.Render(Hash.FromAnonymousObject(new {device = data}));
+            
+            
             var config = new StringBuilder();
             config.AppendLine($"[mobile-manager-{device.Id}]");
             config.AppendLine(device.AppiumEndpoint != string.Empty ? $"url = {device.AppiumEndpoint}" : $"url = ");
@@ -193,8 +203,15 @@ namespace MobileManager.Controllers
 
         private static string CreateAndroidSeleniumConfig(IDevice device)
         {
-            var config = new StringBuilder();
-            config.AppendLine($"[mobile-manager-{device.Id}]");
+            /*var config = new StringBuilder();*/
+
+            string readText = System.IO.File.ReadAllText(@"SeleniumConfigTemplates/XTestAndroid.tt");
+            Template template = Template.Parse(readText); 
+
+            AndroidSeleniumConfig data = new AndroidSeleniumConfig(device);
+            return template.Render(Hash.FromAnonymousObject(new {device = data}));
+
+            /*config.AppendLine($"[mobile-manager-{device.Id}]");
             config.AppendLine(device.AppiumEndpoint != string.Empty ? $"url = {device.AppiumEndpoint}" : $"url = ");
             config.AppendLine($"browserName = chrome mobile");
             config.AppendLine($"platformName = android");
@@ -203,7 +220,7 @@ namespace MobileManager.Controllers
             config.AppendLine($"sessionTimeout = 6000");
             config.AppendLine($"automationName = UiAutomator2");
 
-            return config.ToString();
+            return config.ToString();*/
         }
 
         /// <inheritdoc />
