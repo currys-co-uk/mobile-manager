@@ -173,7 +173,7 @@ namespace MobileManager.Controllers
 
         private string CreateIosSeleniumConfig(IDevice device)
         {
-            string readText = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTestIOS.tt");
+            string readText = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_IOS.tt");
             Template template = Template.Parse(readText); 
 
             IosSeleniumConfig data = new IosSeleniumConfig(device, _configuration);
@@ -205,7 +205,7 @@ namespace MobileManager.Controllers
         {
             /*var config = new StringBuilder();*/
 
-            string readText = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTestAndroid.tt");
+            string readText = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_Android.tt");
             Template template = Template.Parse(readText); 
 
             AndroidSeleniumConfig data = new AndroidSeleniumConfig(device);
