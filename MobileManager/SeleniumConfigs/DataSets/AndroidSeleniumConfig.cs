@@ -19,8 +19,8 @@ namespace MobileManager.SeleniumConfigs.DataSets
             this.Id = device.Id;
             this.Name = device.Name;
             this.AppiumEndpoint = device.AppiumEndpoint;
-            this.Host = new Uri(device.AppiumEndpoint).Host;
-            this.Port = new Uri(device.AppiumEndpoint).Port;
+            this.Host = !string.IsNullOrEmpty(device.AppiumEndpoint) ? new Uri(device.AppiumEndpoint).Host : "";
+            this.Port = !string.IsNullOrEmpty(device.AppiumEndpoint) ? new Uri(device.AppiumEndpoint).Port.ToString() : "";
         }
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace MobileManager.SeleniumConfigs.DataSets
         /// Gets or sets the Port.
         /// </summary>
         /// <value>The Port.</value>
-        public int Port { get; set; }
+        public string Port { get; set; }
     }
 
 }
