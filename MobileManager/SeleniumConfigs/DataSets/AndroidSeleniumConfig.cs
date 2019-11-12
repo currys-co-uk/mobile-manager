@@ -1,3 +1,4 @@
+using System;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Interfaces;
 using DotLiquid;
@@ -18,6 +19,8 @@ namespace MobileManager.SeleniumConfigs.DataSets
             this.Id = device.Id;
             this.Name = device.Name;
             this.AppiumEndpoint = device.AppiumEndpoint;
+            this.Host = new Uri(device.AppiumEndpoint).Host;
+            this.Port = new Uri(device.AppiumEndpoint).Port;
         }
 
         /// <inheritdoc />
@@ -40,6 +43,20 @@ namespace MobileManager.SeleniumConfigs.DataSets
         /// </summary>
         /// <value>The AppiumEndpoint.</value>
         public string AppiumEndpoint { get; set; }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the Host.
+        /// </summary>
+        /// <value>The Host.</value>
+        public string Host { get; set; }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the Port.
+        /// </summary>
+        /// <value>The Port.</value>
+        public int Port { get; set; }
     }
 
 }

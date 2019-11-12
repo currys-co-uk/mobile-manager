@@ -165,7 +165,7 @@ namespace MobileManager.Controllers
                 case DeviceType.Android:
                     return JsonExtension(CreateAndroidSeleniumConfig(device));
                 case DeviceType.Unspecified:
-                    return JsonExtension(CreateIosSeleniumConfig(device));
+                    return JsonExtension("Unsupported device type");
                 default:
                     return JsonExtension("Unsupported device type");
             }
@@ -173,54 +173,28 @@ namespace MobileManager.Controllers
 
         private string CreateIosSeleniumConfig(IDevice device)
         {
-            string readText = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_IOS.tt");
-            Template template = Template.Parse(readText); 
-
             IosSeleniumConfig data = new IosSeleniumConfig(device, _configuration);
-            return template.Render(Hash.FromAnonymousObject(new {device = data}));
             
-            
-            var config = new StringBuilder();
-            config.AppendLine($"[mobile-manager-{device.Id}]");
-            config.AppendLine(device.AppiumEndpoint != string.Empty ? $"url = {device.AppiumEndpoint}" : $"url = ");
-            config.AppendLine($"browserName = safari mobile");
-            config.AppendLine($"platformName = iOS");
-            config.AppendLine($"udid = {device.Id}");
-            config.AppendLine($"deviceName = \"{device.Name}\"");
-            config.AppendLine($"deviceVersion = {device.Properties.First(x => x.Key == "ProductVersion").Value}");
-            config.AppendLine($"automationName = XCUITest");
-            config.AppendLine($"teamId = {_configuration.IosDeveloperCertificateTeamId}");
-            config.AppendLine($"signingId = \"iPhone Developer\"");
-            config.AppendLine($"showXcodeLog: true");
-            config.AppendLine($"realDeviceLogger = /usr/local/lib/node_modules/deviceconsole/deviceconsole");
-            config.AppendLine($"bootstrapPath = /usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent");
-            config.AppendLine($"agentPath = /usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj");
-            config.AppendLine("sessionTimeout = 6000");
-            config.AppendLine($"startIWDP: true");
-
-            return config.ToString();
+            string xtestTemplateRaw = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_IOS.tt");
+            Template xtestTemplate = Template.Parse(xtestTemplateRaw);
+            return xtestTemplate.Render(Hash.FromAnonymousObject(new {device = data}));
         }
 
         private static string CreateAndroidSeleniumConfig(IDevice device)
         {
-            /*var config = new StringBuilder();*/
-
-            string readText = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_Android.tt");
-            Template template = Template.Parse(readText); 
-
             AndroidSeleniumConfig data = new AndroidSeleniumConfig(device);
-            return template.Render(Hash.FromAnonymousObject(new {device = data}));
 
-            /*config.AppendLine($"[mobile-manager-{device.Id}]");
-            config.AppendLine(device.AppiumEndpoint != string.Empty ? $"url = {device.AppiumEndpoint}" : $"url = ");
-            config.AppendLine($"browserName = chrome mobile");
-            config.AppendLine($"platformName = android");
-            config.AppendLine($"udid = {device.Id}");
-            config.AppendLine($"deviceName = \"{device.Name}\" ");
-            config.AppendLine($"sessionTimeout = 6000");
-            config.AppendLine($"automationName = UiAutomator2");
+            string xtestTemplateRaw = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_Android.tt");
+            string jsqaTemplateRaw = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/JSQA_Android.tt");
 
-            return config.ToString();*/
+            Template xtestTemplate = Template.Parse(xtestTemplateRaw);
+            Template jsqaTemplate = Template.Parse(jsqaTemplateRaw); 
+            
+            string xtestConfig = xtestTemplate.Render(Hash.FromAnonymousObject(new {device = data}));
+            string jsqaConfig = jsqaTemplate.Render(Hash.FromAnonymousObject(new {device = data}));
+            var config = new {xtest = xtestConfig, jsqa = jsqaConfig};
+
+            return JsonConvert.SerializeObject(config);
         }
 
         /// <inheritdoc />

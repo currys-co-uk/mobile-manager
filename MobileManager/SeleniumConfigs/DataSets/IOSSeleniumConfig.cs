@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Interfaces;
@@ -21,6 +22,8 @@ namespace MobileManager.SeleniumConfigs.DataSets
             this.Id = device.Id;
             this.Name = device.Name;
             this.AppiumEndpoint = device.AppiumEndpoint;
+            this.Host = new Uri(device.AppiumEndpoint).Host;
+            this.Port = new Uri(device.AppiumEndpoint).Port;
             this.Version = device.Properties.First(x => x.Key == "ProductVersion").Value;
             this.TeamId = configuration.IosDeveloperCertificateTeamId;
         }
@@ -45,6 +48,20 @@ namespace MobileManager.SeleniumConfigs.DataSets
         /// </summary>
         /// <value>The AppiumEndpoint.</value>
         public string AppiumEndpoint { get; set; }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the Host.
+        /// </summary>
+        /// <value>The Host.</value>
+        public string Host { get; set; }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the Port.
+        /// </summary>
+        /// <value>The Port.</value>
+        public int Port { get; set; }
 
         /// <inheritdoc />
         /// <summary>
