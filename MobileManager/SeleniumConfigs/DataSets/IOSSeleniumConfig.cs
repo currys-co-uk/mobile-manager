@@ -3,6 +3,7 @@ using System.Linq;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Interfaces;
 using MobileManager.Configuration.Interfaces;
+using MobileManager.SeleniumConfigs.DataSets.Interfaces;
 using DotLiquid;
 
 namespace MobileManager.SeleniumConfigs.DataSets
@@ -11,7 +12,7 @@ namespace MobileManager.SeleniumConfigs.DataSets
     /// <summary>
     /// IosSeleniumConfig.
     /// </summary>
-    public class IosSeleniumConfig : Drop
+    public class IosSeleniumConfig : Drop, ISeleniumConfig
     {
         /// <summary>
         /// Initializes a new instance of the IosSeleniumConfig class.

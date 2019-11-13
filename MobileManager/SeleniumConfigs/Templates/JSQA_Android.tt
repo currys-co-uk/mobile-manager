@@ -1,15 +1,15 @@
 Appium: {
-      host: {{device.host}},
-      port: {{device.port}},
+      host: {{data.host}},
+      port: {{data.port}},
       platform: 'android',
       desiredCapabilities: {
         realMobile: true,
-        deviceName: '{{device.name}}',
+        deviceName: '{{data.name}}',
         browserName: 'chrome',
         chromeOptions:{
           w3c: false
         },
         sessionTimeout: 6000,
-        udid: '{{device.id}}'
+        udid: '{{data.id}}'
       },
 }

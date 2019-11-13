@@ -15,6 +15,7 @@ using MobileManager.Models.Devices.Interfaces;
 using MobileManager.Services;
 using MobileManager.Utils;
 using MobileManager.SeleniumConfigs.DataSets;
+using MobileManager.SeleniumConfigs.DataSets.Interfaces;
 using Newtonsoft.Json;
 using DotLiquid;
 using DotLiquid.FileSystems;
@@ -171,30 +172,36 @@ namespace MobileManager.Controllers
             }
         }
 
-        private string CreateIosSeleniumConfig(IDevice device)
+        private object CreateIosSeleniumConfig(IDevice device)
         {
             IosSeleniumConfig data = new IosSeleniumConfig(device, _configuration);
             
-            string xtestTemplateRaw = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_IOS.tt");
-            Template xtestTemplate = Template.Parse(xtestTemplateRaw);
-            return xtestTemplate.Render(Hash.FromAnonymousObject(new {device = data}));
+            var rawTemplates = new Dictionary<string, string>();
+            rawTemplates.Add("xtest", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_IOS.tt"));
+            rawTemplates.Add("jsqa", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/JSQA_IOS.tt"));
+            return RenderSeleniumConfig(rawTemplates, data);
         }
 
-        private static string CreateAndroidSeleniumConfig(IDevice device)
+        private object CreateAndroidSeleniumConfig(IDevice device)
         {
             AndroidSeleniumConfig data = new AndroidSeleniumConfig(device);
 
-            string xtestTemplateRaw = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_Android.tt");
-            string jsqaTemplateRaw = System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/JSQA_Android.tt");
+            var rawTemplates = new Dictionary<string, string>();
+            rawTemplates.Add("xtest", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_Android.tt"));
+            rawTemplates.Add("jsqa", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/JSQA_Android.tt"));
+            return RenderSeleniumConfig(rawTemplates, data);
+        }
 
-            Template xtestTemplate = Template.Parse(xtestTemplateRaw);
-            Template jsqaTemplate = Template.Parse(jsqaTemplateRaw); 
-            
-            string xtestConfig = xtestTemplate.Render(Hash.FromAnonymousObject(new {device = data}));
-            string jsqaConfig = jsqaTemplate.Render(Hash.FromAnonymousObject(new {device = data}));
-            var config = new {xtest = xtestConfig, jsqa = jsqaConfig};
-
-            return JsonConvert.SerializeObject(config);
+        private object RenderSeleniumConfig(Dictionary<string, string> rawTemplates, ISeleniumConfig config)
+        {
+            var configs = new Dictionary<string, string>();
+            foreach(var item in rawTemplates)
+            {
+                Template template = Template.Parse(item.Value);
+                string seleniumConfig = template.Render(Hash.FromAnonymousObject(new {data = config}));
+                configs.Add(item.Key, seleniumConfig);
+            }            
+            return configs; 
         }
 
         /// <inheritdoc />

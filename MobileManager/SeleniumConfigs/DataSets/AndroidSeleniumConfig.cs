@@ -1,6 +1,7 @@
 using System;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Devices.Interfaces;
+using MobileManager.SeleniumConfigs.DataSets.Interfaces;
 using DotLiquid;
 
 namespace MobileManager.SeleniumConfigs.DataSets
@@ -9,7 +10,7 @@ namespace MobileManager.SeleniumConfigs.DataSets
     /// <summary>
     /// AndroidSeleniumConfig.
     /// </summary>
-    public class AndroidSeleniumConfig : Drop
+    public class AndroidSeleniumConfig : Drop, ISeleniumConfig
     {
         /// <summary>
         /// Initializes a new instance of the AndroidSeleniumConfig class.

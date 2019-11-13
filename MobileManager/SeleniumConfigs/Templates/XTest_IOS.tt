@@ -1,12 +1,12 @@
-[mobile-manager-{{device.id}}]
-url = {{device.appium_endpoint}}
+[mobile-manager-{{data.id}}]
+url = {{data.appium_endpoint}}
 browserName = safari mobile
 platformName = iOS
-udid = {{device.id}}
-deviceName = "{{device.name}}"
-deviceVersion = "{{device.version}}"
+udid = {{data.id}}
+deviceName = "{{data.name}}"
+deviceVersion = "{{data.version}}"
 automationName = XCUITest
-teamId = "{{device.team_id}}"
+teamId = "{{data.team_id}}"
 signingId = "iPhone Developer"
 showXcodeLog: true
 realDeviceLogger = "/usr/local/lib/node_modules/deviceconsole/deviceconsole"
