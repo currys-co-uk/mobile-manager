@@ -1,16 +1,19 @@
-[mobile-manager-{{device.id}}]
-url = {{device.appium_endpoint}}
-browserName = safari mobile
-platformName = iOS
-udid = {{device.id}}
-deviceName = "{{device.name}}"
-deviceVersion = "{{device.version}}"
-automationName = XCUITest
-teamId = "{{device.team_id}}"
-signingId = "iPhone Developer"
-showXcodeLog: true
-realDeviceLogger = "/usr/local/lib/node_modules/deviceconsole/deviceconsole"
-bootstrapPath = "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent"
-agentPath = "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj"
-sessionTimeout = 6000
-startIWDP: true
+  Appium: {
+    host: "{{data.host}}",
+    port: {{data.port}},
+    platform: 'iOS',
+    desiredCapabilities: {
+      realMobile: "true",
+      deviceName: "{{device.name}}",
+      os_version: "{{device.version}}",
+      browserName: "safari",
+      sessionTimeout: 6000,
+      automationName: "XCUITest",
+      showXcodeLog: true,
+      startIWDP: true,
+      signingId: "iPhone Developer",
+      realDeviceLogger: "/usr/local/lib/node_modules/deviceconsole/deviceconsole",
+      bootstrapPath: "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent",
+      agentPath: "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj",
+    },
+},

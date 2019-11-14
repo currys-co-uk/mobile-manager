@@ -1,5 +1,5 @@
 Appium: {
-      host: {{data.host}},
+      host: "{{data.host}}",
       port: {{data.port}},
       platform: 'android',
       desiredCapabilities: {
@@ -12,4 +12,4 @@ Appium: {
         sessionTimeout: 6000,
         udid: '{{data.id}}'
       },
-}
+},
