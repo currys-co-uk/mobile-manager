@@ -178,7 +178,7 @@ namespace MobileManager.Controllers
             
             var rawTemplates = new Dictionary<string, string>();
             rawTemplates.Add("xtest", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_IOS.tt"));
-            rawTemplates.Add("jsqa", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/JSQA_IOS.tt"));
+            rawTemplates.Add("codeceptjs", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/CodeceptJS_IOS.tt"));
             return RenderSeleniumConfig(rawTemplates, data);
         }
 
@@ -188,7 +188,7 @@ namespace MobileManager.Controllers
 
             var rawTemplates = new Dictionary<string, string>();
             rawTemplates.Add("xtest", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_Android.tt"));
-            rawTemplates.Add("jsqa", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/JSQA_Android.tt"));
+            rawTemplates.Add("codeceptjs", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/CodeceptJS_Android.tt"));
             return RenderSeleniumConfig(rawTemplates, data);
         }
 
