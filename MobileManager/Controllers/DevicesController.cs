@@ -172,7 +172,7 @@ namespace MobileManager.Controllers
             }
         }
 
-        private object CreateIosSeleniumConfig(IDevice device)
+        private IDictionary<string, string> CreateIosSeleniumConfig(IDevice device)
         {
             IosSeleniumConfig data = new IosSeleniumConfig(device, _configuration);
             
@@ -182,7 +182,7 @@ namespace MobileManager.Controllers
             return RenderSeleniumConfig(rawTemplates, data);
         }
 
-        private object CreateAndroidSeleniumConfig(IDevice device)
+        private IDictionary<string, string> CreateAndroidSeleniumConfig(IDevice device)
         {
             AndroidSeleniumConfig data = new AndroidSeleniumConfig(device);
 
@@ -192,7 +192,7 @@ namespace MobileManager.Controllers
             return RenderSeleniumConfig(rawTemplates, data);
         }
 
-        private object RenderSeleniumConfig(Dictionary<string, string> rawTemplates, ISeleniumConfig config)
+        private IDictionary<string, string> RenderSeleniumConfig(Dictionary<string, string> rawTemplates, ISeleniumConfig config)
         {
             var configs = new Dictionary<string, string>();
             foreach(var item in rawTemplates)
