@@ -11,6 +11,8 @@ namespace MobileManager.SeleniumConfigs.DataSets
     /// <inheritdoc />
     /// <summary>
     /// IosSeleniumConfig.
+    /// This class is dataset for DotLiquid text templating system.
+    /// Inherits from DotLiquid/Drop class for data transform.
     /// </summary>
     public class IosSeleniumConfig : Drop, ISeleniumConfig
     {
@@ -23,8 +25,8 @@ namespace MobileManager.SeleniumConfigs.DataSets
             this.Id = device.Id;
             this.Name = device.Name;
             this.AppiumEndpoint = device.AppiumEndpoint;
-            this.Host = !string.IsNullOrEmpty(device.AppiumEndpoint) ? new Uri(device.AppiumEndpoint).Host : "";
-            this.Port = !string.IsNullOrEmpty(device.AppiumEndpoint) ? new Uri(device.AppiumEndpoint).Port.ToString() : "";
+            this.Host = !string.IsNullOrEmpty(device.AppiumEndpoint) ? new Uri(device.AppiumEndpoint).Host : string.Empty;
+            this.Port = !string.IsNullOrEmpty(device.AppiumEndpoint) ? new Uri(device.AppiumEndpoint).Port.ToString() : string.Empty;
             this.Version = device.Properties.First(x => x.Key == "ProductVersion").Value;
             this.TeamId = configuration.IosDeveloperCertificateTeamId;
         }
@@ -34,49 +36,49 @@ namespace MobileManager.SeleniumConfigs.DataSets
         /// Gets or sets the Id.
         /// </summary>
         /// <value>The Id.</value>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <inheritdoc />
         /// <summary>
         /// Gets or sets the Name.
         /// </summary>
         /// <value>The Name.</value>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <inheritdoc />
         /// <summary>
         /// Gets or sets the AppiumEndpoint.
         /// </summary>
         /// <value>The AppiumEndpoint.</value>
-        public string AppiumEndpoint { get; set; }
+        public string AppiumEndpoint { get; }
 
         /// <inheritdoc />
         /// <summary>
         /// Gets or sets the Host.
         /// </summary>
         /// <value>The Host.</value>
-        public string Host { get; set; }
+        public string Host { get; }
 
         /// <inheritdoc />
         /// <summary>
         /// Gets or sets the Port.
         /// </summary>
         /// <value>The Port.</value>
-        public string Port { get; set; }
+        public string Port { get; }
 
         /// <inheritdoc />
         /// <summary>
         /// Gets or sets the Version.
         /// </summary>
         /// <value>The Version.</value>
-        public string Version { get; set; }
+        public string Version { get; }
 
         /// <inheritdoc />
         /// <summary>
         /// Gets or sets the TeamId.
         /// </summary>
         /// <value>The TeamId.</value>
-        public string TeamId { get; set; }
+        public string TeamId { get; }
     }
 
 }
