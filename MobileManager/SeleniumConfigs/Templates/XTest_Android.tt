@@ -1,0 +1,8 @@
+[mobile-manager-{{data.id}}]
+url = {{data.appium_endpoint}}
+browserName = chrome mobile
+platformName = android
+udid = {{data.id}}
+deviceName = "{{data.name}}"
+sessionTimeout = 6000
+automationName = UiAutomator2

@@ -1,0 +1,16 @@
+[mobile-manager-{{data.id}}]
+url = {{data.appium_endpoint}}
+browserName = safari mobile
+platformName = iOS
+udid = {{data.id}}
+deviceName = "{{data.name}}"
+deviceVersion = "{{data.version}}"
+automationName = XCUITest
+teamId = "{{data.team_id}}"
+signingId = "iPhone Developer"
+showXcodeLog: true
+realDeviceLogger = "/usr/local/lib/node_modules/deviceconsole/deviceconsole"
+bootstrapPath = "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent"
+agentPath = "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj"
+sessionTimeout = 6000
+startIWDP: true
