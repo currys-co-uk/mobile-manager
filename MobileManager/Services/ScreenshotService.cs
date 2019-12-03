@@ -87,7 +87,8 @@ namespace MobileManager.Services
 
                 // adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
                 var screenshotRet = _externalProcesses.RunShellProcess("adb",
-                    $" -s {device.Id} exec-out 'screencap -p' > {screenshotFilePath}; exit 0", 10000);
+                    $" --args -s {device.Id} exec-out 'screencap -p' > {screenshotFilePath}; exit 0", 10000);
+                _logger.Info(_externalProcesses.ToString());
                 _logger.Debug(screenshotRet);
 
                 if (screenshotRet.Contains("error:"))
