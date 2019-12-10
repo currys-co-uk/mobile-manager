@@ -86,7 +86,7 @@ namespace MobileManager.Services
                 var screenshotFilePath = Path.Combine(screenshotFolder, $"{device.Id}.png");
 
                 var screenshotRet = _externalProcesses.RunProcessAndReadOutput("adb",
-                    $"-s {device.Id} shell 'screencap -p' /sdcard/{device.Id}.png", 10000);
+                    $"-s {device.Id} shell screencap -p /sdcard/{device.Id}.png", 10000);
 
                 var screenshotPull = _externalProcesses.RunProcessAndReadOutput("adb",
                     $"-s {device.Id} pull /sdcard/{device.Id}.png {screenshotFilePath}", 10000);
