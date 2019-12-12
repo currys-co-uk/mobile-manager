@@ -1,6 +1,6 @@
 # Mobile Manager
 
-[![Build Status](https://travis-ci.com/xfoggi/MobileManager.svg?token=PhqzsFPZKMpYRG2NVwVr&branch=master)](https://travis-ci.com/xfoggi/MobileManager)
+[![Build Status](https://travis-ci.com/dixons/mobile-manager.svg?branch=master)](https://travis-ci.com/dixons/mobile-manager)
 
 ## About
 MobileManager is an application used for automation testing of iOS and Android mobile devices.
