@@ -85,12 +85,16 @@ namespace MobileManager.Services
                 Directory.CreateDirectory(screenshotFolder);
                 var screenshotFilePath = Path.Combine(screenshotFolder, $"{device.Id}.png");
 
-                // adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
-                var screenshotRet = _externalProcesses.RunShellProcess("adb",
-                    $" -s {device.Id} exec-out 'screencap -p' > {screenshotFilePath}; exit 0", 10000);
-                _logger.Debug(screenshotRet);
+                var screenshotRet = _externalProcesses.RunProcessAndReadOutput("adb",
+                    $"-s {device.Id} shell screencap -p /sdcard/{device.Id}.png", 10000);
 
-                if (screenshotRet.Contains("error:"))
+                var screenshotPull = _externalProcesses.RunProcessAndReadOutput("adb",
+                    $"-s {device.Id} pull /sdcard/{device.Id}.png {screenshotFilePath}", 10000);
+
+                _logger.Debug(screenshotRet);
+                _logger.Debug(screenshotPull);
+
+                if (screenshotRet.Contains("error:") || screenshotPull.Contains("error:"))
                 {
                     return GetDefaultMobileImage();
                 }
