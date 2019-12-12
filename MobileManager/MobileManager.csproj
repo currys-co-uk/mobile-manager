@@ -96,6 +96,9 @@
     <Content Update="DbMappingFiles\ReservedDevice.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SeleniumConfigs\Templates\*.tt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <_ContentIncludedByDefault Remove="~\mobile-manager-git-repos\Sample iOS\Assets.xcassets\AppIcon.appiconset\Contents.json" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.IO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MobileManager.Configuration.Interfaces;
@@ -174,21 +175,23 @@ namespace MobileManager.Controllers
 
         private IDictionary<string, string> CreateIosSeleniumConfig(IDevice device)
         {
+            string templatesBase = Path.Combine(Environment.CurrentDirectory, @"SeleniumConfigs/Templates/");
             IosSeleniumConfig data = new IosSeleniumConfig(device, _configuration);
             
             var rawTemplates = new Dictionary<string, string>();
-            rawTemplates.Add("xtest", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_IOS.tt"));
-            rawTemplates.Add("codeceptjs", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/CodeceptJS_IOS.tt"));
+            rawTemplates.Add("xtest", System.IO.File.ReadAllText(Path.Combine(templatesBase, @"XTest_IOS.tt")));
+            rawTemplates.Add("codeceptjs", System.IO.File.ReadAllText(Path.Combine(templatesBase, @"CodeceptJS_IOS.tt")));
             return RenderSeleniumConfig(rawTemplates, data);
         }
 
         private IDictionary<string, string> CreateAndroidSeleniumConfig(IDevice device)
         {
+            string templatesBase = Path.Combine(Environment.CurrentDirectory, @"SeleniumConfigs/Templates/");
             AndroidSeleniumConfig data = new AndroidSeleniumConfig(device);
 
             var rawTemplates = new Dictionary<string, string>();
-            rawTemplates.Add("xtest", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/XTest_Android.tt"));
-            rawTemplates.Add("codeceptjs", System.IO.File.ReadAllText(@"SeleniumConfigs/Templates/CodeceptJS_Android.tt"));
+            rawTemplates.Add("xtest", System.IO.File.ReadAllText(Path.Combine(templatesBase, @"XTest_Android.tt")));
+            rawTemplates.Add("codeceptjs", System.IO.File.ReadAllText(Path.Combine(templatesBase, @"CodeceptJS_Android.tt")));
             return RenderSeleniumConfig(rawTemplates, data);
         }
 
