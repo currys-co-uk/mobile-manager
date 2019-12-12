@@ -4,8 +4,8 @@
     platform: 'iOS',
     desiredCapabilities: {
       realMobile: "true",
-      deviceName: "{{device.name}}",
-      os_version: "{{device.version}}",
+      deviceName: "{{data.name}}",
+      os_version: "{{data.version}}",
       browserName: "safari",
       sessionTimeout: 6000,
       automationName: "XCUITest",

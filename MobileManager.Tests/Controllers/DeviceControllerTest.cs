@@ -586,9 +586,14 @@ namespace MobileManagerTests.Controllers
 
             // Assert
             var viewResult = Assert.IsType<JsonResult>(result);
-            Assert.Contains(_device1.Id, viewResult.Value.ToString());
-            Assert.Contains($"deviceVersion = {version}", viewResult.Value.ToString());
-            Assert.Contains("teamId", viewResult.Value.ToString());
+            IDictionary<string, string> dict = viewResult.Value as IDictionary<string, string>;
+
+            Assert.Contains(_device1.Id, dict["xtest"]);
+            Assert.Contains($"deviceVersion = \"{version}\"", dict["xtest"]);
+            Assert.Contains("teamId", dict["xtest"]);
+
+            Assert.Contains(_device1.Name, dict["codeceptjs"]);
+            Assert.Contains($"os_version: \"{version}\"", dict["codeceptjs"]);
         }
 
         [Fact]
@@ -610,8 +615,13 @@ namespace MobileManagerTests.Controllers
 
             // Assert
             var viewResult = Assert.IsType<JsonResult>(result);
-            Assert.Contains(_device1.Id, viewResult.Value.ToString());
-            Assert.Contains("platformName = android", viewResult.Value.ToString());
+            IDictionary<string, string> dict = viewResult.Value as IDictionary<string, string>;
+
+            Assert.Contains(_device1.Id, dict["xtest"]);
+            Assert.Contains("platformName = android", dict["xtest"]);
+
+            Assert.Contains(_device1.Id, dict["codeceptjs"]);
+            Assert.Contains("platform: 'android'", dict["codeceptjs"]);
         }
 
         [Fact]
