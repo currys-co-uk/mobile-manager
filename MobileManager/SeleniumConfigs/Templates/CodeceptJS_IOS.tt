@@ -1,6 +1,6 @@
 {
-    "host: "{{data.host}}",
-    "port: {{data.port}},
+    "host": "{{data.host}}",
+    "port": {{data.port}},
     "platform": "iOS",
     "desiredCapabilities": {
       "realMobile": "true",
@@ -14,6 +14,6 @@
       "signingId": "iPhone Developer",
       "realDeviceLogger": "/usr/local/lib/node_modules/deviceconsole/deviceconsole",
       "bootstrapPath": "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent",
-      "agentPath": "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj",
+      "agentPath": "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj"
     }
 }
