@@ -1,19 +1,19 @@
-  Appium: {
-    host: "{{data.host}}",
-    port: {{data.port}},
-    platform: 'iOS',
-    desiredCapabilities: {
-      realMobile: "true",
-      deviceName: "{{data.name}}",
-      os_version: "{{data.version}}",
-      browserName: "safari",
-      sessionTimeout: 6000,
-      automationName: "XCUITest",
-      showXcodeLog: true,
-      startIWDP: true,
-      signingId: "iPhone Developer",
-      realDeviceLogger: "/usr/local/lib/node_modules/deviceconsole/deviceconsole",
-      bootstrapPath: "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent",
-      agentPath: "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj",
-    },
-},
+{
+    "host": "{{data.host}}",
+    "port": {{data.port}},
+    "platform": "iOS",
+    "desiredCapabilities": {
+      "realMobile": "true",
+      "deviceName": "{{data.name}}",
+      "os_version": "{{data.version}}",
+      "browserName": "safari",
+      "sessionTimeout": 6000,
+      "automationName": "XCUITest",
+      "showXcodeLog": true,
+      "startIWDP": true,
+      "signingId": "iPhone Developer",
+      "realDeviceLogger": "/usr/local/lib/node_modules/deviceconsole/deviceconsole",
+      "bootstrapPath": "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent",
+      "agentPath": "/usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj"
+    }
+}

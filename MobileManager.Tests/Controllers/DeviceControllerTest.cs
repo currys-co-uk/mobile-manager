@@ -593,7 +593,7 @@ namespace MobileManagerTests.Controllers
             Assert.Contains("teamId", dict["xtest"]);
 
             Assert.Contains(_device1.Name, dict["codeceptjs"]);
-            Assert.Contains($"os_version: \"{version}\"", dict["codeceptjs"]);
+            Assert.Contains($"\"os_version\": \"{version}\"", dict["codeceptjs"]);
         }
 
         [Fact]
@@ -621,7 +621,7 @@ namespace MobileManagerTests.Controllers
             Assert.Contains("platformName = android", dict["xtest"]);
 
             Assert.Contains(_device1.Id, dict["codeceptjs"]);
-            Assert.Contains("platform: 'android'", dict["codeceptjs"]);
+            Assert.Contains("\"platform\": \"android\"", dict["codeceptjs"]);
         }
 
         [Fact]
