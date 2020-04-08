@@ -2,7 +2,7 @@
 {
     /// <inheritdoc />
     /// <summary>
-    /// Adb command.
+    /// App resource file info.
     /// </summary>
     public class AppResourceInfo : IAppResourceInfo
     {

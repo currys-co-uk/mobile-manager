@@ -125,7 +125,7 @@ namespace MobileManager.Controllers
             /* 
              * at first try HEAD HTTP request
              * if is MD5 there we can use it without necessity to download whole file 
-             * works for e.g. artifactory 
+             * It works for e.g. artifactory 
              */
             WebRequest request = WebRequest.Create(uri);
             request.Method = "HEAD";
