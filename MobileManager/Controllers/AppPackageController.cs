@@ -119,8 +119,8 @@ namespace MobileManager.Controllers
         {
             LogRequestToDebug();
             var extension = Path.GetExtension(uri.AbsolutePath).Trim('.').ToLower();
-            /*if (extension != "ipa" && extension != "apk")
-                return BadRequestExtension("File extension has to be IPA or APK");*/
+            if (extension != "ipa" && extension != "apk")
+                return BadRequestExtension("File extension has to be IPA or APK");
 
             /* 
              * at first try HEAD HTTP request
