@@ -1,4 +1,6 @@
-﻿namespace MobileManager.Models.App
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MobileManager.Models.App
 {
     /// <summary>
     /// App resource file info.
@@ -6,14 +8,15 @@
     public interface IAppResourceInfo
     {
         /// <summary>
-        /// The FileName
+        /// Gets the id.
         /// </summary>
-        string FileName { get; set; }
+        [Key]
+        string Id { get; set; }
 
         /// <summary>
-        /// Gets the hash of app.
+        /// Gets the FileName
         /// </summary>
-        string Hash { get; set; }
+        string FileName { get; set; }
 
         /// <summary>
         /// Gets the whole file path of app.
@@ -26,7 +29,7 @@
         string FileExtension { get; set; }
 
         /// <summary>
-        /// Gets original upload time of file
+        /// Gets original upload DateTime of file
         /// </summary>
         System.DateTime UploadTime { get; set; }
     }

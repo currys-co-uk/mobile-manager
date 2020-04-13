@@ -1,4 +1,7 @@
-﻿namespace MobileManager.Models.App
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace MobileManager.Models.App
 {
     /// <inheritdoc />
     /// <summary>
@@ -6,24 +9,29 @@
     /// </summary>
     public class AppResourceInfo : IAppResourceInfo
     {
-        public AppResourceInfo(string hash, string fileName, string filePath, string fileExtension, System.DateTime uploadTime)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:MobileManager.App.AppResourceInfo"/> class.
+        /// </summary>
+        /// <param name="id">Identifier.</param>
+        /// <param name="fileName">FileName.</param>
+        /// <param name="filePath">FilePath</param>
+        /// <param name="fileExtension">FileExtension.</param>
+        /// <param name="uploadTime">UploadTime.</param>
+        public AppResourceInfo(string id, string fileName, string filePath, string fileExtension, DateTime uploadTime)
         {
-            Hash = hash;
+            Id = id;
             FileName = fileName;
             FilePath = filePath;
             FileExtension = fileExtension;
             UploadTime = uploadTime;
         }
 
-        public AppResourceInfo()
-        {
-        }
+        /// <inheritdoc />
+        [Key]
+        public string Id { get; set; }
 
         /// <inheritdoc />
         public string FileName { get; set; }
-
-        /// <inheritdoc />
-        public string Hash { get; set; }
 
         /// <inheritdoc />
         public string FilePath { get; set; }
@@ -32,6 +40,6 @@
         public string FileExtension { get; set; }
 
         /// <inheritdoc />
-        public System.DateTime UploadTime { get; set; }
+        public DateTime UploadTime { get; set; }
     }
 }
