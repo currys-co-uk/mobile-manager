@@ -58,7 +58,7 @@ namespace MobileManager.Services
             CreateStorageFolder();
 
             var extension = Path.GetExtension(file.FileName).Trim('.').ToLower();
-            var hash = this.GetHashFromFile(file.OpenReadStream());
+            var hash = GetHashFromFile(file.OpenReadStream());
             var folderPath = Path.Combine(_storagePath, hash);
             var filePath = Path.Combine(folderPath, file.FileName);
 
