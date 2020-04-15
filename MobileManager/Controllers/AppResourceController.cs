@@ -17,7 +17,7 @@ namespace MobileManager.Controllers
     /// <summary>
     /// App resources controller.
     /// </summary>
-    [Route("api/v1/appPackage")]
+    [Route("api/v1/appResource")]
     [EnableCors("AllowAllHeaders")]
     public class AppResourceController : ControllerExtensions, IAppResourceController
     {
