@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MobileManager.Controllers.Interfaces;
 using MobileManager.Http.Clients.Interfaces;
 using MobileManager.Logging.Logger;
+using MobileManager.Models.App;
 using MobileManager.Services.Interfaces;
 
 #pragma warning disable 1998
@@ -72,14 +73,28 @@ namespace MobileManager.Controllers
         public async Task<IActionResult> OnPostUploadAsync(IFormFile file)
         {
             LogRequestToDebug();
-            if (file == null || file.Length == 0)
+            if (file == null || file.Length == 0) 
+            {
                 return BadRequestExtension("File not selected");
+            }
 
             var extension = Path.GetExtension(file.FileName).Trim('.').ToLower();
-            if (extension != "ipa" && extension != "apk")
+            if (extension != "ipa" && extension != "apk") 
+            {
                 return BadRequestExtension("File extension has to be IPA or APK");
+            }
 
-            return JsonExtension(await _appResourceService.UploadAppResource(file));
+            AppResourceInfo appInfo;
+            try
+            {
+                appInfo = await _appResourceService.UploadAppResource(file);
+            }
+            catch (Exception e)
+            {
+                return BadRequestExtension(e);
+            }
+
+            return JsonExtension(appInfo);
         }
 
         /// <inheritdoc />
@@ -97,9 +112,21 @@ namespace MobileManager.Controllers
             LogRequestToDebug();
             var extension = Path.GetExtension(uri.AbsolutePath).Trim('.').ToLower();
             if (extension != "ipa" && extension != "apk")
+            {
                 return BadRequestExtension("File extension has to be IPA or APK");
+            }
 
-            return JsonExtension(_appResourceService.DownloadAppResourceFromUri(uri));
+            AppResourceInfo appInfo;
+            try
+            {
+                appInfo = _appResourceService.DownloadAppResourceFromUri(uri);
+            }
+            catch (Exception e)
+            {
+                return BadRequestExtension(e);
+            }
+
+            return JsonExtension(appInfo);
 
         }
 
@@ -122,7 +149,15 @@ namespace MobileManager.Controllers
                 return NotFoundExtension("Application source not found on storage.");
             }
 
-            _appResourceService.DeleteAppResource(id);
+            try
+            {
+                _appResourceService.DeleteAppResource(id);
+            }
+            catch (Exception e)
+            {
+                return StatusCodeExtension(500, e);
+            }
+
             return OkExtension(String.Format("App source successfully deleted: [{0}]", id));
         }
     }

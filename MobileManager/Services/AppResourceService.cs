@@ -100,10 +100,10 @@ namespace MobileManager.Services
             var randomTemp = "_temp" + (new Random()).Next(10000);
             var tempFolderPath = Path.Combine(_storagePath, randomTemp);
             var tempFilePath = Path.Combine(tempFolderPath, fileName);
+            Directory.CreateDirectory(tempFolderPath);
 
             using (var client = new WebClient())
             {
-                Directory.CreateDirectory(tempFolderPath);
                 client.DownloadFile(uri, tempFilePath);
             }
 
