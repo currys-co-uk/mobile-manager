@@ -2,6 +2,7 @@
 using MobileManager.Appium;
 using MobileManager.Database.DatabaseContexts.Base;
 using MobileManager.Database.Extensions;
+using MobileManager.Models.App;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Logger;
 using MobileManager.Models.Reservations;
@@ -23,7 +24,8 @@ namespace MobileManager.Database
                 .GetModelMapping<ReservationApplied>()
                 .GetModelMapping<ReservedDevice>()
                 .GetModelMapping<AppiumProcess>()
-                .GetModelMapping<Device>();
+                .GetModelMapping<Device>()
+                .GetModelMapping<AppResourceInfo>();
 
             // Cascade Delete
             modelBuilder.Entity<Reservation>()
@@ -88,5 +90,10 @@ namespace MobileManager.Database
         /// Gets or sets the Logger.
         /// </summary>
         public DbSet<LogMessage> Logger { get; set; }
+
+        /// <summary>
+        /// Gets or sets the AppResources.
+        /// </summary>
+        public DbSet<AppResourceInfo> AppResources { get; set; }
     }
 }

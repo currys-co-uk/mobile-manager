@@ -78,6 +78,9 @@
     <Content Update="DbMappingFiles\AppiumProcess.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="DbMappingFiles\AppResourceInfo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="DbMappingFiles\Device.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

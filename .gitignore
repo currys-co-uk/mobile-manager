@@ -6,6 +6,7 @@
 [Bb]in/
 packages/
 TestResults/
+build.bat
 
 # globs
 Makefile.in
@@ -48,6 +49,7 @@ MobileManager/Screenshot/*.tiff
 .vs/
 
 MobileManager/Screenshot/
+_appFiles/
 
 *.db
 

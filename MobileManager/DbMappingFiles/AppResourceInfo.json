@@ -1,0 +1,49 @@
+﻿{
+  "TableNames": {
+    "MsSql": "AppResourceInfo",
+    "Sqlite": "AppResourceInfo",
+    "PostgreSql": "app_resource_info"
+  },
+  "PropertyMappings": [
+    {
+      "PropertyName": "Id",
+      "Mappings": {
+        "MsSql": "Id",
+        "Sqlite": "Id",
+        "PostgreSql": "id"
+      }
+    },
+    {
+      "PropertyName": "FileName",
+      "Mappings": {
+        "MsSql": "FileName",
+        "Sqlite": "FileName",
+        "PostgreSql": "file_name"
+      }
+    },
+    {
+      "PropertyName": "FilePath",
+      "Mappings": {
+        "MsSql": "FilePath",
+        "Sqlite": "FilePath",
+        "PostgreSql": "file_path"
+      }
+    },
+    {
+      "PropertyName": "FileExtension",
+      "Mappings": {
+        "MsSql": "FileExtension",
+        "Sqlite": "FileExtension",
+        "PostgreSql": "file_extension"
+      }
+    },
+    {
+      "PropertyName": "UploadTime",
+      "Mappings": {
+        "MsSql": "UploadTime",
+        "Sqlite": "UploadTime",
+        "PostgreSql": "upload_time"
+      }
+    }
+  ]
+}

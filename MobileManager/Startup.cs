@@ -23,6 +23,7 @@ using MobileManager.Database.Repositories.Interfaces;
 using MobileManager.Http.Clients;
 using MobileManager.Http.Clients.Interfaces;
 using MobileManager.Logging.Logger;
+using MobileManager.Models.App;
 using MobileManager.Models.Devices;
 using MobileManager.Models.Logger;
 using MobileManager.Models.Reservations;
@@ -117,7 +118,8 @@ namespace MobileManager
                 .AddTransient<IRepository<Reservation>, ReservationQueueRepository>()
                 .AddTransient<IRepository<ReservationApplied>, ReservationAppliedRepository>()
                 .AddTransient<IRepository<AppiumProcess>, AppiumRepository>()
-                .AddTransient<IRepository<LogMessage>, LoggerRepository>();
+                .AddTransient<IRepository<LogMessage>, LoggerRepository>()
+                .AddTransient<IRepository<AppResourceInfo>, AppResourceInfoRepository>();
 
             //services.AddSingleton<IManagerConfiguration, ManagerConfiguration>();
             services.AddSingleton<IRestClient, RestClient>()
@@ -128,8 +130,9 @@ namespace MobileManager
                 .AddSingleton<IManagerLogger, ManagerLogger>()
                 .AddSingleton<IDeviceUtils, DeviceUtils>()
                 .AddSingleton<IScreenshotService, ScreenshotService>()
-                .AddSingleton<IExternalProcesses, ExternalProcesses>();
-                
+                .AddSingleton<IExternalProcesses, ExternalProcesses>()
+                .AddSingleton<IAppResourceService, AppResourceService>();
+
 
             services.AddMvcCore().AddApiExplorer();
 
