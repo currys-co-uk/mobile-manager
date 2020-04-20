@@ -79,6 +79,14 @@ namespace MobileManager.Services
         /// <inheritdoc />
         public AppResourceInfo DownloadAppResourceFromUri(Uri uri)
         {
+            // Basic Auth on remote server
+            NetworkCredential credentials = null;
+            if (uri.UserInfo.Length > 0)
+            {
+               var userInfo = uri.UserInfo.Split(":", 2);
+               credentials = new NetworkCredential(userInfo[0], userInfo[1]);
+            }
+
             /* 
             * at first try HEAD HTTP request
             * if is MD5 there we can use it without necessity to download whole file 
@@ -86,11 +94,12 @@ namespace MobileManager.Services
             */
             WebRequest request = WebRequest.Create(uri);
             request.Method = "HEAD";
+            request.Credentials = credentials;
             var md5 = request.GetResponse().Headers.Get("X-Checksum-Md5");
             if (md5 != null)
             {
                 var appResourceInfo = FindAppResource(md5);
-                if (appResourceInfo.Id == md5)
+                if (appResourceInfo != null)
                 {
                     return appResourceInfo;
                 }
@@ -104,6 +113,7 @@ namespace MobileManager.Services
 
             using (var client = new WebClient())
             {
+                client.Credentials = credentials;
                 client.DownloadFile(uri, tempFilePath);
             }
 
