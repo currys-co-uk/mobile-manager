@@ -215,13 +215,20 @@ namespace MobileManager.Services
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    var splitBy = new[] {':'};
-                    var key = line.Split(splitBy, 2)[0].Trim().Trim('[', ']');
-                    var val = line.Split(splitBy, 2)[1].Trim().Trim('[', ']');
-
-                    if (!string.IsNullOrWhiteSpace(val))
+                    try 
                     {
-                        properties.Add(key, val);
+                        var splitBy = new[] {':'};
+                        var key = line.Split(splitBy, 2)[0].Trim().Trim('[', ']');
+                        var val = line.Split(splitBy, 2)[1].Trim().Trim('[', ']');
+
+                        if (!string.IsNullOrWhiteSpace(val))
+                        {
+                            properties.Add(key, val);
+                        }
+                    }
+                    catch (IndexOutOfRangeException ex)
+                    {
+                        _logger.Error("Failed adding device " + deviceId + " property : " + line + ". " + ex.Message);
                     }
                 }
             }
