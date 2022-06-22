@@ -18,7 +18,7 @@
   <ItemGroup>
     <PackageReference Include="dein.ToolBox" Version="1.4.3" />
     <PackageReference Include="DotLiquid" Version="2.0.314" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0-preview1" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0-preview1-35029" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
