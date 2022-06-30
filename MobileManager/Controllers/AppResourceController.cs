@@ -70,6 +70,7 @@ namespace MobileManager.Controllers
         /// <response code="400">Invalid upload request</response>
         /// <response code="500">Internal failure</response>
         [HttpPost("upload")]
+        [RequestSizeLimit(100000000)]
         public async Task<IActionResult> OnPostUploadAsync(IFormFile file)
         {
             LogRequestToDebug();
